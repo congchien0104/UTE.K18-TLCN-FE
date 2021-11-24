@@ -3,6 +3,8 @@ import UserService from "../../services/user.service";
 
 function UserList(props) {
   const [users, setUsers] = useState([]);
+  const [disabled, setDisabled] = useState();
+
   useEffect(() => {
     retrieveUsers();
     console.log(users);
@@ -19,6 +21,8 @@ function UserList(props) {
         console.log(e);
       });
   };
+
+  const updateDisabled = (data) => {};
   return (
     <div>
       <table className="table mt-5">
@@ -46,7 +50,15 @@ function UserList(props) {
                 <td>{user.firstname || "Null"}</td>
                 <td>{user.fullname || "Null"}</td>
                 <td>{user.roles || "Null"}</td>
-                <td>{user.state || "Null"}</td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    onClick={updateDisabled(user)}
+                  >
+                    {user.disabled ? "Unlock" : "Lock"}
+                  </button>
+                </td>
                 <td>{user.createdAt}</td>
                 <td>{user.updatedAt}</td>
                 <td>
@@ -58,7 +70,7 @@ function UserList(props) {
                     class="btn btn-danger ml-2"
                     onClick={() => {
                       const confirmBox = window.confirm(
-                        "Do you really want to delete this Category?"
+                        "Do you really want to delete this User?"
                       );
                       if (confirmBox === true) {
                         alert("okkk");

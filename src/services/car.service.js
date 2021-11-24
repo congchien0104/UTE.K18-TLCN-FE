@@ -15,8 +15,15 @@ const getCar = (id) => {
   });
 };
 
+const create = (data) => {
+  return axios.post(API_URL + "cars", data, {
+    headers: authHeader(),
+  });
+};
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getCarList,
   getCar,
+  create,
 };

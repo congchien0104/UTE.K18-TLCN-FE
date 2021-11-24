@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import CarService from "../../services/car.service";
 
 function CarList(props) {
@@ -21,6 +22,9 @@ function CarList(props) {
   };
   return (
     <div>
+      <Link to={"/cars/add"} className="nav-link">
+        Create Car
+      </Link>
       <table className="table mt-5">
         <thead className="thead-dark">
           <tr>
@@ -46,9 +50,11 @@ function CarList(props) {
                 <td>{car.createdAt}</td>
                 <td>{car.updatedAt}</td>
                 <td>
-                  <button type="button" class="btn btn-primary">
-                    Edit
-                  </button>
+                  <Link to={`/cars/${car.id}`}>
+                    <button type="button" class="btn btn-primary">
+                      Edit
+                    </button>
+                  </Link>
                   <button
                     type="button"
                     class="btn btn-danger ml-2"

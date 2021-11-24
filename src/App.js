@@ -11,6 +11,9 @@ import Reservations from "./pages/Reservations/Reservations";
 import Feedbacks from "./pages/Feedbacks/Feedbacks";
 import Login from "./components/Login/Login";
 import Companies from "./pages/Companies/Companies";
+import AddCar from "./components/AddCar/AddCar";
+import EditCar from "./components/EditCar/EditCar";
+import EditCompany from "./components/EditCompany/EditCompany";
 
 function App() {
   return (
@@ -25,7 +28,18 @@ function App() {
             <Route exact path={["/", "/home"]} component={() => <Home />} />
             <Route exact path="/users" component={() => <Users />} />
             <Route exact path="/cars" component={() => <Cars />} />
+            <Route
+              exact
+              path="/companies/cars/:id"
+              component={() => <AddCar />}
+            />
+            <Route exact path="/cars/:id" component={() => <EditCar />} />
             <Route exact path="/companies" component={() => <Companies />} />
+            <Route
+              exact
+              path="/companies/:id"
+              component={() => <EditCompany />}
+            />
             <Route
               exact
               path="/reservations"
