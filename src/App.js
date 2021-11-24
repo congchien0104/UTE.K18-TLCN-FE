@@ -14,6 +14,7 @@ import Companies from "./pages/Companies/Companies";
 import AddCar from "./components/AddCar/AddCar";
 import EditCar from "./components/EditCar/EditCar";
 import EditCompany from "./components/EditCompany/EditCompany";
+import ViewCar from "./components/ViewCar/ViewCar";
 
 function App() {
   return (
@@ -39,6 +40,11 @@ function App() {
               exact
               path="/companies/:id"
               component={() => <EditCompany />}
+            />
+            <Route
+              exact
+              path="/companies/view/:id"
+              component={() => <ViewCar />}
             />
             <Route
               exact
