@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CarService from "../../services/car.service";
+import Pagination from "react-responsive-pagination";
 
 function CarList(props) {
   const [cars, setCars] = useState([]);
@@ -25,6 +26,17 @@ function CarList(props) {
       <Link to={"/cars/add"} className="nav-link">
         Create Car
       </Link>
+      <form class="form-inline">
+        <input
+          class="form-control mr-sm-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+          Search
+        </button>
+      </form>
       <table className="table mt-5">
         <thead className="thead-dark">
           <tr>
@@ -47,8 +59,8 @@ function CarList(props) {
                 <td>{car.plate_number}</td>
                 <td>{car.capacity}</td>
                 <td>{car.station}</td>
-                <td>{car.createdAt}</td>
-                <td>{car.updatedAt}</td>
+                <td>{formatDate(car.createdAt)}</td>
+                <td>{formatDate(car.updatedAt)}</td>
                 <td>
                   <Link to={`/cars/${car.id}`}>
                     <button type="button" class="btn btn-primary">
@@ -74,8 +86,20 @@ function CarList(props) {
             ))}
         </tbody>
       </table>
+      <Pagination total={5} current={2} />
     </div>
   );
 }
 
+const formatDate = (date) => {
+  var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [day, month, year].join("/");
+};
 export default CarList;

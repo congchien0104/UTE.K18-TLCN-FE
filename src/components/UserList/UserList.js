@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import UserService from "../../services/user.service";
+import Pagination from "react-responsive-pagination";
 
 function UserList(props) {
   const [users, setUsers] = useState([]);
@@ -25,6 +26,17 @@ function UserList(props) {
   const updateDisabled = (data) => {};
   return (
     <div>
+      <form class="form-inline">
+        <input
+          class="form-control mr-sm-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+          Search
+        </button>
+      </form>
       <table className="table mt-5">
         <thead className="thead-dark">
           <tr>
@@ -59,8 +71,8 @@ function UserList(props) {
                     {user.disabled ? "Unlock" : "Lock"}
                   </button>
                 </td>
-                <td>{user.createdAt}</td>
-                <td>{user.updatedAt}</td>
+                <td>{formatDate(user.createdAt)}</td>
+                <td>{formatDate(user.updatedAt)}</td>
                 <td>
                   <button type="button" class="btn btn-primary">
                     Edit
@@ -84,8 +96,21 @@ function UserList(props) {
             ))}
         </tbody>
       </table>
+      <Pagination total={5} current={2} />
     </div>
   );
 }
+
+const formatDate = (date) => {
+  var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [day, month, year].join("/");
+};
 
 export default UserList;
