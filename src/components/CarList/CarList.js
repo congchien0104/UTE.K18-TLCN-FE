@@ -22,23 +22,29 @@ function CarList(props) {
       });
   };
   return (
-    <div>
-      <Link to={"/cars/add"} className="nav-link">
-        Create Car
-      </Link>
-      <form class="form-inline">
-        <input
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-          Search
-        </button>
-      </form>
-      <table className="table mt-5">
-        <thead className="thead-dark">
+    <div className="car-list-admin">
+      <div className="car-top-admin row">
+        <div className="button-top col-md-2">
+          <Link to={"/cars/add"} className="btn btn-primary">
+            <i class="fas fa-plus"></i>  Create Car
+          </Link>
+        </div>
+        <div className="search-top col-md-10">
+          <form className="row">
+            <input
+              className="form-control offset-3 col-md-3 mr-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-primary" type="submit">
+              Search
+            </button>
+          </form>          
+        </div>
+      </div>
+      <table className="table table-bordered table-hover car-table mt-5">
+        <thead className="table-primary">
           <tr>
             <th scope="col">STT</th>
             <th scope="col">Name</th>

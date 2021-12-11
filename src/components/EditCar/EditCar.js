@@ -71,7 +71,7 @@ function EditCar() {
     // return false;
   }
   return (
-    <div className="container mt-5">
+    <div className="m-editcar container mt-5">
       <h2>Tạo Nhà Xe</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div class="row">

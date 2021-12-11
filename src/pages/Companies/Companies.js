@@ -3,8 +3,8 @@ import CompanyList from "../../components/CompanyList/CompanyList";
 
 function Companies(props) {
   return (
-    <div>
-      <h2>Company List</h2>
+    <div className="companies-admin">
+      <h1 className="title-page">Company List</h1>
       <CompanyList />
     </div>
   );

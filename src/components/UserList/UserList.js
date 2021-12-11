@@ -3,99 +3,162 @@ import UserService from "../../services/user.service";
 import Pagination from "react-responsive-pagination";
 
 function UserList(props) {
-  const [users, setUsers] = useState([]);
-  const [disabled, setDisabled] = useState();
+  // const [users, setUsers] = useState([]);
+  // const [disabled, setDisabled] = useState();
 
-  useEffect(() => {
-    retrieveUsers();
-    console.log(users);
-  }, []);
+  // useEffect(() => {
+  //   retrieveUsers();
+  //   console.log(users);
+  // }, []);
 
-  const retrieveUsers = () => {
-    UserService.getUserList()
-      .then((response) => {
-        //setCategories(response.data);
-        setUsers(response.data.data.users.rows);
-        console.log(response.data.data.users.rows);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+  // const retrieveUsers = () => {
+  //   UserService.getUserList()
+  //     .then((response) => {
+  //       //setCategories(response.data);
+  //       setUsers(response.data.data.users.rows);
+  //       console.log(response.data.data.users.rows);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // };
 
-  const updateDisabled = (data) => {};
+  const updateDisabled = (data) => { };
+
+  const users = [
+    {
+      name: "a",
+      phone: 84,
+      address: "asdfghjkl",
+      createdAt: "20:10:10"
+    },
+    // {
+    //   name: "a",
+    //   phone: 84,
+    //   address: "asdfghjklqưertyujjklsdfghjkl",
+    //   createdAt: "20:10:10"
+    // },
+    // {
+    //   name: "a",
+    //   phone: 84,
+    //   address: "asdfghjkl",
+    //   createdAt: "20:10:10"
+    // },
+    // {
+    //   name: "a",
+    //   phone: 84,
+    //   address: "asdfghjkl",
+    //   createdAt: "20:10:10"
+    // },
+    // {
+    //   name: "a",
+    //   phone: 84,
+    //   address: "asdfghjklqưertyujjklsdfghjkl",
+    //   createdAt: "20:10:10"
+    // },
+    // {
+    //   name: "a",
+    //   phone: 84,
+    //   address: "asdfghjkl",
+    //   createdAt: "20:10:10"
+    // },
+    // {
+    //   name: "a",
+    //   phone: 84,
+    //   address: "asdfghjkl",
+    //   createdAt: "20:10:10"
+    // },
+    // {
+    //   name: "a",
+    //   phone: 84,
+    //   address: "asdfghjklqưertyujjklsdfghjkl",
+    //   createdAt: "20:10:10"
+    // },
+    // {
+    //   name: "a",
+    //   phone: 84,
+    //   address: "asdfghjkl",
+    //   createdAt: "20:10:10"
+    // },
+    // {
+    //   name: "a",
+    //   phone: 84,
+    //   address: "asdfghjkl",
+    //   createdAt: "20:10:10"
+    // },
+  ]
+
   return (
-    <div>
-      <form class="form-inline">
-        <input
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-          Search
-        </button>
-      </form>
-      <table className="table mt-5">
-        <thead className="thead-dark">
-          <tr>
-            <th scope="col">STT</th>
-            <th scope="col">Username</th>
-            <th scope="col">Email</th>
-            <th scope="col">Firstname</th>
-            <th scope="col">FullName</th>
-            <th scope="col">Roles</th>
-            <th scope="col">State</th>
-            <th scope="col">CreatedDate</th>
-            <th scope="col">UpdatedDate</th>
-            <th scope="col">Option</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users &&
-            users.map((user, index) => (
-              <tr key={index}>
-                <th scope="row">{index + 1}</th>
-                <td>{user.username}</td>
-                <td>{user.email}</td>
-                <td>{user.firstname || "Null"}</td>
-                <td>{user.fullname || "Null"}</td>
-                <td>{user.roles || "Null"}</td>
-                <td>
-                  <button
-                    type="button"
-                    class="btn btn-primary"
-                    onClick={updateDisabled(user)}
-                  >
-                    {user.disabled ? "Unlock" : "Lock"}
-                  </button>
-                </td>
-                <td>{formatDate(user.createdAt)}</td>
-                <td>{formatDate(user.updatedAt)}</td>
-                <td>
-                  <button type="button" class="btn btn-primary">
-                    Edit
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger ml-2"
-                    onClick={() => {
-                      const confirmBox = window.confirm(
-                        "Do you really want to delete this User?"
-                      );
-                      if (confirmBox === true) {
-                        alert("okkk");
-                      }
-                    }}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+    <div className="user-list-admin">
+      <div className="search-user">
+        <form className="row justify-content-center">
+          <input class="form-control col-md-3 mr-2" type="search" placeholder="Search" aria-label="Search" />
+          <button class="btn btn-outline-primary" type="submit">
+            Search
+          </button>
+        </form>
+      </div>
+      <div className="users-table">
+        <table className="table table-bordered table-hover user-table mt-5">
+          <thead className="table-primary">
+            <tr>
+              <th>STT</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Firstname</th>
+              <th>FullName</th>
+              <th>Roles</th>
+              <th>State</th>
+              <th>CreatedDate</th>
+              <th>UpdatedDate</th>
+              <th>Option</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users &&
+              users.map((user, index) => (
+                <tr key={index}>
+                  <th scope="row">{index + 1}</th>
+                  <td>{user.username}</td>
+                  <td>{user.email}</td>
+                  <td>{user.firstname || "Null"}</td>
+                  <td>{user.fullname || "Null"}</td>
+                  <td>{user.roles || "Null"}</td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      onClick={updateDisabled(user)}
+                    >
+                      {user.disabled ? "Unlock" : "Lock"}
+                    </button>
+                  </td>
+                  <td>{formatDate(user.createdAt)}</td>
+                  <td>{formatDate(user.updatedAt)}</td>
+                  <td>
+                    <button type="button" class="btn btn-primary">
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger ml-2"
+                      onClick={() => {
+                        const confirmBox = window.confirm(
+                          "Do you really want to delete this User?"
+                        );
+                        if (confirmBox === true) {
+                          alert("okkk");
+                        }
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
       <Pagination total={5} current={2} />
     </div>
   );

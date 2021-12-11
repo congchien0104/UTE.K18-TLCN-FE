@@ -68,14 +68,11 @@ const Login = (props) => {
   };
 
   return (
-    <div className="col-md-12">
-      <div className="card card-container">
-        <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        />
-
+    <div className="login-admin">
+      <div className="login-form">
+        <figure className="text-center">
+          <img src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="profile-img" className="profile-img-card" />
+        </figure>
         <Form onSubmit={handleLogin} ref={form}>
           <div className="form-group">
             <label htmlFor="username">Username</label>
@@ -88,7 +85,6 @@ const Login = (props) => {
               validations={[required]}
             />
           </div>
-
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <Input

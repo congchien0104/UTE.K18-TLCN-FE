@@ -35,14 +35,12 @@ function SideBar(props) {
       to: "/feedbacks",
     },
   ];
-
   const [state, setState] = useState(1);
+  
   return (
-    <div>
-      <img src={logo} alt="..." className="img-thumbnail" />
-      <h6>
-        <span className="text-primary">Booking Now Management</span>
-      </h6>
+    <div className="side-bar">
+      <img src={logo} alt="side_bar_logo" className="img-thumbnail" />
+      <p className="sb-title">Booking Now Management</p>
       <div className="list-group" id="list-tab" role="tablist">
         {menus.map((menu, index) => (
           <Link
