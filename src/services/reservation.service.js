@@ -3,8 +3,8 @@ import authHeader from "../services/auth-service";
 
 const API_URL = "http://localhost:8080/";
 
-const getReservations = () => {
-  return axios.get(API_URL + "reservations", {
+const getReservations = (page) => {
+  return axios.get(API_URL + `reservations?page=${page}`, {
     headers: authHeader(),
   });
 };

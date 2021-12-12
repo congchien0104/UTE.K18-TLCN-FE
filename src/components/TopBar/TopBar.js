@@ -22,7 +22,7 @@ const TopBar = (props) => {
 
   console.log(currentUser);
   return (
-    <nav className="navbar navbar-dark bg-primary">
+    <nav className="navbar-admin navbar navbar-dark bg-primary">
       <Link to={"/"} className="navbar-brand" style={{ paddingLeft: "15px" }}>
         ADMIN
       </Link>
@@ -30,7 +30,7 @@ const TopBar = (props) => {
         <ul className="navbar-nav navbar-register">
           <li className="nav-item">
             <Link to={"/login"} className="nav-link" onClick={logOut}>
-              Logout
+              <i class="fas fa-sign-out-alt"></i>Logout
             </Link>
           </li>
         </ul>
@@ -38,7 +38,7 @@ const TopBar = (props) => {
         <ul className="navbar-nav navbar-register">
           <li className="nav-item">
             <Link to={"/login"} className="nav-link">
-              Login
+              <i class="fas fa-user-circle"></i> Login
             </Link>
           </li>
         </ul>

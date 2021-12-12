@@ -3,8 +3,8 @@ import authHeader from "../services/auth-service";
 
 const API_URL = "http://localhost:8080/";
 
-const getCarList = () => {
-  return axios.get(API_URL + "cars", {
+const getCarList = (page) => {
+  return axios.get(API_URL + `cars?page=${page}`, {
     headers: authHeader(),
   });
 };
@@ -21,9 +21,17 @@ const create = (data) => {
   });
 };
 
+const update = (id, data) => {
+  return axios.put(API_URL + `cars/${id}`, data, {
+    headers: authHeader(),
+  });
+};
+
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getCarList,
   getCar,
   create,
+  update
 };

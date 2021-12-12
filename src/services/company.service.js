@@ -21,9 +21,18 @@ const getCompany = (id) => {
     headers: authHeader(),
   });
 };
+
+const accept = (id, data) => {
+  console.log(id);
+  console.log(data);
+  return axios.put(API_URL + `companies/${id}`, data, {
+    headers: authHeader(),
+  });
+}
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getCompanyList,
   createCar,
   getCompany,
+  accept
 };

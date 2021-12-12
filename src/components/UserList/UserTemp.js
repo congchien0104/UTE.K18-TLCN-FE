@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import UserService from "../../services/user.service";
 import Pagination from "react-responsive-pagination";
-import UserModal from "../../Modals/UserModal";
 
 function UserList(props) {
   const [users, setUsers] = useState([]);
@@ -34,24 +33,12 @@ function UserList(props) {
       });
   };
 
-  useEffect(() => {
-    UserService.getSearchUser(currentPage, search)
-    .then((response) => {
-      //setCategories(response.data);
-      setUsers(response.data.data.users.rows);
-      setCount(response.data.data.users.count);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-  }, [search]);
-
   const updateDisabled = (data) => {};
   return (
     <div className="user-list-admin">
       <div className="search-user">
         <form className="row justify-content-center">
-          <input name="search" onChange={(e)=> setSearch(e.target.value)} class="form-control col-md-3 mr-2" type="search" placeholder="Search" aria-label="Search" />
+          <input class="form-control col-md-3 mr-2" type="search" placeholder="Search" aria-label="Search" />
           <button class="btn btn-outline-primary" type="submit">
             Search
           </button>
@@ -64,9 +51,12 @@ function UserList(props) {
               <th>STT</th>
               <th>Username</th>
               <th>Email</th>
+              <th>Firstname</th>
               <th>FullName</th>
+              <th>Roles</th>
+              <th>State</th>
               <th>CreatedDate</th>
-              <th>Details</th>
+              <th>UpdatedDate</th>
               <th>Option</th>
             </tr>
           </thead>
@@ -77,8 +67,10 @@ function UserList(props) {
                   <th scope="row">{index + 1}</th>
                   <td>{user.username}</td>
                   <td>{user.email}</td>
-                  <td>{user.fullname || ""}</td>
-                  {/* <td>
+                  <td>{user.firstname || "Null"}</td>
+                  <td>{user.fullname || "Null"}</td>
+                  <td>{user.roles || "Null"}</td>
+                  <td>
                     <button
                       type="button"
                       class="btn btn-primary"
@@ -86,9 +78,9 @@ function UserList(props) {
                     >
                       {user.disabled ? "Unlock" : "Lock"}
                     </button>
-                  </td> */}
+                  </td>
                   <td>{formatDate(user.createdAt)}</td>
-                  <td><UserModal data={user}/></td>
+                  <td>{formatDate(user.updatedAt)}</td>
                   <td>
                     <button type="button" class="btn btn-primary">
                       Edit
@@ -105,7 +97,7 @@ function UserList(props) {
                         }
                       }}
                     >
-                      Lock
+                      Delete
                     </button>
                   </td>
                 </tr>

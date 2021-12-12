@@ -2,7 +2,7 @@
   text-align: center;
 } */
 
-.App-logo {
+/* .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
@@ -35,7 +35,7 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
 
 label {
   display: block;
@@ -72,4 +72,66 @@ label {
 
 a.active {
   background-color: blue !important;
+}
+
+.navbar-admin{
+  margin-bottom: 16px;
+}
+
+.side-bar .img-thumbnail{
+  margin-bottom: 16px;
+}
+.side-bar .sb-title{
+  color: #4311d1;
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+}
+.side-bar .list-group .list-group-item{
+  font-size: 20px;
+}
+
+.title-page{
+  margin-bottom: 16px;
+}
+.btn-create{
+  margin-bottom: 40px;
+}
+
+.company-table tr th:nth-child(1),
+.company-table tr th:nth-child(5),
+.company-table tr th:nth-child(6),
+.company-table tr th:nth-child(7),
+.company-table tr td:nth-child(1),
+.company-table tr td:nth-child(5),
+.company-table tr td:nth-child(6),
+.company-table tr td:nth-child(7){
+  text-align: center;
+}
+
+.feedback-table,
+.car-table,
+.users-table{
+  height: 690px;
+}
+.user-table tr th:nth-child(1),
+.user-table tr th:nth-child(6),
+.user-table tr th:nth-child(7),
+.user-table tr th:nth-child(10),
+.user-table tr td:nth-child(1),
+.user-table tr td:nth-child(6),
+.user-table tr td:nth-child(7),
+.user-table tr td:nth-child(10){
+  text-align: center;
+}
+
+.login-form{
+  width: 360px;
+  margin: 0 auto;
+  padding: 20px;
+
+}
+
+.login-form .profile-img-card{
+  border-radius: 50%;
 }

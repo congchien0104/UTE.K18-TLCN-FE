@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useParams, useHistory } from "react-router-dom";
 
 import CompanyService from "../../services/company.service";
+import imageService from "../../services/image.service";
 
 function AddCar() {
   // form validation rules
@@ -36,16 +37,36 @@ function AddCar() {
   const { errors } = formState;
   const { id } = useParams();
   let history = useHistory();
+  const [file, setFile] = useState();
+  const [fileName, setFileName] = useState();
+
+  const handleImageChange = (e) => {
+    console.log(e.target.files[0]);
+    setFile(e.target.files[0]);
+    setFileName(e.target.files[0].name);
+  };
+
+
   function onSubmit(data) {
     // display form data on success
-    CompanyService.createCar(id, data)
-      .then((response) => {
-        console.log(response.data);
-        history.push("/cars");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    var temp = new FormData();
+    //temp.append("filename", fileName);
+    temp.append("file", file);
+    imageService.upload(temp)
+    .then((response) => {
+      console.log("success Image");
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+    // CompanyService.createCar(id, data)
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     history.push("/cars");
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //   });
     // alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
     // return false;
   }
@@ -162,7 +183,20 @@ function AddCar() {
           </div>
           <div class="col"></div>
         </div>
-        <button type="submit" className="btn btn-primary">
+        <div class="row">
+          <div class="col">
+            <label for="image">Image</label>
+            <input
+            type="file"
+            class="form-control-file"
+            id="exampleFormControlFile1"
+            name="image"
+            onChange={handleImageChange}
+            />
+          </div>
+          <div class="col"></div>
+        </div>
+        <button type="submit" className="btn btn-primary mt-2">
           Tạo
         </button>
       </form>

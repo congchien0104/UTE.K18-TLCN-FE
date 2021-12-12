@@ -2,43 +2,59 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CarService from "../../services/car.service";
 import Pagination from "react-responsive-pagination";
+import CarModal from "../../Modals/CarModal";
 
 function CarList(props) {
   const [cars, setCars] = useState([]);
+  const [count, setCount] = useState();
+  const [totalPages, setTotalPage] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+
+  function handlePageChange(page) {
+    setCurrentPage(page);
+    // ... do something with `page`
+  }
   useEffect(() => {
     retrieveCars();
     console.log(cars);
-  }, []);
+  }, [currentPage]);
 
   const retrieveCars = () => {
-    CarService.getCarList()
+    CarService.getCarList(currentPage)
       .then((response) => {
         //setCategories(response.data);
-        setCars(response.data.data.cars);
-        console.log(response.data.data.cars);
+        setCars(response.data.data.cars.rows);
+        setCount(response.data.data.cars.count);
+        console.log(response.data.data);
       })
       .catch((e) => {
         console.log(e);
       });
   };
   return (
-    <div>
-      <Link to={"/cars/add"} className="nav-link">
-        Create Car
-      </Link>
-      <form class="form-inline">
-        <input
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-          Search
-        </button>
-      </form>
-      <table className="table mt-5">
-        <thead className="thead-dark">
+    <div className="car-list-admin">
+      <div className="car-top-admin row">
+        <div className="button-top col-md-2">
+          <Link to={"/cars/add"} className="btn btn-primary">
+            <i class="fas fa-plus"></i>  Create Car
+          </Link>
+        </div>
+        <div className="search-top col-md-10">
+          <form className="row">
+            <input
+              className="form-control offset-3 col-md-3 mr-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-primary" type="submit">
+              Search
+            </button>
+          </form>          
+        </div>
+      </div>
+      <table className="table table-bordered table-hover car-table mt-5">
+        <thead className="table-primary">
           <tr>
             <th scope="col">STT</th>
             <th scope="col">Name</th>
@@ -46,7 +62,8 @@ function CarList(props) {
             <th scope="col">Capacity</th>
             <th scope="col">Station</th>
             <th scope="col">CreatedDate</th>
-            <th scope="col">UpdatedDate</th>
+            <th scope="col">Image</th>
+            <th scope="col">Details</th>
             <th scope="col">Option</th>
           </tr>
         </thead>
@@ -60,7 +77,8 @@ function CarList(props) {
                 <td>{car.capacity}</td>
                 <td>{car.station}</td>
                 <td>{formatDate(car.createdAt)}</td>
-                <td>{formatDate(car.updatedAt)}</td>
+                <td><img src={car.image} alt={car.name} /></td>
+                <td><CarModal data={car}/></td>
                 <td>
                   <Link to={`/cars/${car.id}`}>
                     <button type="button" class="btn btn-primary">
@@ -86,7 +104,11 @@ function CarList(props) {
             ))}
         </tbody>
       </table>
-      <Pagination total={5} current={2} />
+      <Pagination 
+        total={Math.ceil(count/8)}
+        current={currentPage}
+        onPageChange={page => handlePageChange(page)}
+      />
     </div>
   );
 }

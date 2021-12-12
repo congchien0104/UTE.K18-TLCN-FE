@@ -3,8 +3,8 @@ import authHeader from "../services/auth-service";
 
 const API_URL = "http://localhost:8080/";
 
-const getFeedbacks = () => {
-  return axios.get(API_URL + "feedbacks", {
+const getFeedbacks = (page) => {
+  return axios.get(API_URL + `feedbacks?page=${page}`, {
     headers: authHeader(),
   });
 };

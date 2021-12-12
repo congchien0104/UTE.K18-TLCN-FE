@@ -7,6 +7,9 @@ import { useParams, useHistory } from "react-router-dom";
 import CompanyService from "../../services/company.service";
 import CarService from "../../services/car.service";
 
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import storage from "../../firebase";
+
 function EditCar() {
   // form validation rules
   const validationSchema = Yup.object().shape({
@@ -38,6 +41,16 @@ function EditCar() {
   const { errors } = formState;
   const { id } = useParams();
   let history = useHistory();
+
+  const [file, setFile] = useState();
+    //const [fileName, setFileName] = useState();
+
+  const handleImageChange = (e) => {
+    console.log(e.target.files[0]);
+    setFile(e.target.files[0]);
+    //setFileName(e.target.files[0].name);
+  };
+
   const getCar = (id) => {
     CarService.getCar(id)
       .then((response) => {
@@ -58,17 +71,44 @@ function EditCar() {
   }, [id]);
 
   function onSubmit(data) {
+
+    const storageRef = ref(storage, 'cars/' + file.name);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+        'state_changed',
+        (snapshot) => {},
+        (error) => {
+            console.log(error);
+        },
+        () => {
+            getDownloadURL(uploadTask.snapshot.ref).then(
+                async (downloadURL) => {
+                    // const payload = data;
+                    // payload.image = downloadURL;
+                    data.image = downloadURL;
+                    console.log(data);
+                    CarService.update(id, data)
+                    .then((response) => {
+                      console.log(response.data);
+                      alert(response.data.data);
+                      history.push("/cars");
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    })
+                }
+            );
+        }
+    );
     // display form data on success
-    CarService.update(id, data)
-      .then((response) => {
-        console.log(response.data);
-        history.push("/cars");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-    // alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
-    // return false;
+    // CarService.update(id, data)
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     history.push("/cars");
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //   });
   }
   return (
     <div className="container mt-5">
@@ -181,6 +221,18 @@ function EditCar() {
             <div className="invalid-feedback">
               {errors.plate_number?.message}
             </div>
+          </div>
+          <div class="col"></div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label for="plate_number">Image</label>
+            <input
+                type="file"
+                class="form-control-file mb-4"
+                id="company-image"
+                onChange={handleImageChange}
+            />
           </div>
           <div class="col"></div>
         </div>
