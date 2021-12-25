@@ -15,6 +15,11 @@ import AddCar from "./components/AddCar/AddCar";
 import EditCar from "./components/EditCar/EditCar";
 import EditCompany from "./components/EditCompany/EditCompany";
 import ViewCar from "./components/ViewCar/ViewCar";
+import AddLine from "./components/AddLine/AddLine";
+import FeedbackHome from "./pages/Feedbacks/FeedbackHome";
+import FeedbackOfCar from "./pages/Feedbacks/FeedbackOfCar";
+import ReservationOfCar from "./pages/Reservations/ReservationOfCar";
+import ReservationHome from "./pages/Reservations/ReservationHome";
 
 function App() {
   return (
@@ -28,11 +33,36 @@ function App() {
           <Switch>
             <Route exact path={["/", "/home"]} component={() => <Home />} />
             <Route exact path="/users" component={() => <Users />} />
-            <Route exact path="/cars" component={() => <Cars />} />
+            <Route exact path="/company/cars" component={() => <Cars />} />
             <Route
               exact
-              path="/companies/cars/:id"
+              path="/company/cars/:id"
               component={() => <AddCar />}
+            />
+            <Route
+              exact
+              path="/company/cars/line/:id"
+              component={() => <AddLine />}
+            />
+            <Route
+              exact
+              path="/company/feedbacks"
+              component={() => <FeedbackHome />}
+            />
+            <Route
+              exact
+              path="/company/feedbacks/:id"
+              component={() => <FeedbackOfCar />}
+            />
+            <Route
+              exact
+              path="/company/reservations"
+              component={() => <ReservationHome />}
+            />
+            <Route
+              exact
+              path="/company/reservations/:id"
+              component={() => <ReservationOfCar />}
             />
             <Route exact path="/cars/:id" component={() => <EditCar />} />
             <Route exact path="/companies" component={() => <Companies />} />

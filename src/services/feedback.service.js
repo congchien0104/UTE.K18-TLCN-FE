@@ -9,7 +9,14 @@ const getFeedbacks = (page) => {
   });
 };
 
+const getFeedbackOfCar = (id) => {
+  return axios.get(API_URL + `feedbacks/${id}`, {
+    headers: authHeader(),
+  });
+};
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getFeedbacks,
+  getFeedbackOfCar
 };

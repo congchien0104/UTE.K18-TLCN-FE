@@ -17,7 +17,7 @@ function CarModal({data}) {
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-              <p>ID: {data.id}</p>
+              <div className="carlist-img"><img src={data.image} alt={data.name}/></div>
               <p>Name: {data.name}</p>
               <p>Plate Number: {data.plate_number}</p>
               <p>Capacity: {data.capacity}</p>

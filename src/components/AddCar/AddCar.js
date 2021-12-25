@@ -4,8 +4,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useParams, useHistory } from "react-router-dom";
 
-import CompanyService from "../../services/company.service";
-import imageService from "../../services/image.service";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import storage from "../../firebase";
+import companyService from "../../services/company.service";
 
 function AddCar() {
   // form validation rules
@@ -16,19 +17,14 @@ function AddCar() {
     station: Yup.string()
       .min(6, "Name must be at least 6 characters")
       .required("Station is required"),
+    station_to: Yup.string()
+      .min(6, "Name must be at least 6 characters")
+      .required("Station is required"),
     price: Yup.string().required("Last name is required"),
     capacity: Yup.string().required("Capcity is required"),
-    start: Yup.string()
-      .min(6, "Start must be at least 6 characters")
-      .required("Start is required"),
-    destination: Yup.string()
-      .min(6, "Destination must be at least 6 characters")
-      .required("Password is required"),
     plate_number: Yup.string()
       .min(6, "Destination must be at least 6 characters")
       .required("Password is required"),
-    departure: Yup.string().required("Departure is required"),
-    arrival: Yup.string().required("Arrival is required"),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -38,27 +34,58 @@ function AddCar() {
   const { id } = useParams();
   let history = useHistory();
   const [file, setFile] = useState();
-  const [fileName, setFileName] = useState();
 
   const handleImageChange = (e) => {
-    console.log(e.target.files[0]);
     setFile(e.target.files[0]);
-    setFileName(e.target.files[0].name);
   };
 
 
   function onSubmit(data) {
+    const storageRef = ref(storage, 'cars/' + file.name);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => {},
+            (error) => {
+                console.log(error);
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then(
+                    async (downloadURL) => {
+                        // const payload = data;
+                        // payload.image = downloadURL;
+                        data.image = downloadURL;
+                        console.log(data);
+                        companyService.createCar(id, data)
+                          .then((response) => {
+                            console.log(response.data);
+                            history.push("/company/cars");
+                          })
+                          .catch((e) => {
+                            console.log(e);
+                          });
+                        // const result = await createServiceApi(payload);
+                        // if (result.code === 201) {
+                        //     notifySuccess('Đã tạo dịch vụ mới');
+                        //     history.push('/business-dashboard/services');
+                        // } else {
+                        //     notifyError(result.message);
+                        // }
+                    }
+                );
+            }
+        );
     // display form data on success
-    var temp = new FormData();
-    //temp.append("filename", fileName);
-    temp.append("file", file);
-    imageService.upload(temp)
-    .then((response) => {
-      console.log("success Image");
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+    // var temp = new FormData();
+    // //temp.append("filename", fileName);
+    // temp.append("file", file);
+    // imageService.upload(temp)
+    // .then((response) => {
+    //   console.log("success Image");
+    // })
+    // .catch((e) => {
+    //   console.log(e);
+    // });
     // CompanyService.createCar(id, data)
     //   .then((response) => {
     //     console.log(response.data);
@@ -67,8 +94,8 @@ function AddCar() {
     //   .catch((e) => {
     //     console.log(e);
     //   });
-    // alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
-    // return false;
+    alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
+    return false;
   }
   return (
     <div className="container mt-5">
@@ -85,16 +112,6 @@ function AddCar() {
             />
             <div className="invalid-feedback">{errors.name?.message}</div>
           </div>
-          <div class="col">
-            <label for="from-station">Điểm đi</label>
-            <input
-              name="start"
-              type="text"
-              {...register("start")}
-              className={`form-control ${errors.start ? "is-invalid" : ""}`}
-            />
-            <div className="invalid-feedback">{errors.start?.message}</div>
-          </div>
         </div>
         <div class="row mt-2">
           <div class="col">
@@ -107,19 +124,17 @@ function AddCar() {
             />
             <div className="invalid-feedback">{errors.station?.message}</div>
           </div>
+        </div>
+        <div class="row mt-2">
           <div class="col">
-            <label for="to-station">Điểm đến</label>
+            <label for="station_to">Bến Đến</label>
             <input
-              name="destination"
+              name="station_to"
               type="text"
-              {...register("destination")}
-              className={`form-control ${
-                errors.destination ? "is-invalid" : ""
-              }`}
+              {...register("station_to")}
+              className={`form-control ${errors.station_to ? "is-invalid" : ""}`}
             />
-            <div className="invalid-feedback">
-              {errors.destination?.message}
-            </div>
+            <div className="invalid-feedback">{errors.station_to?.message}</div>
           </div>
         </div>
         <div class="row">
@@ -133,16 +148,6 @@ function AddCar() {
             />
             <div className="invalid-feedback">{errors.price?.message}</div>
           </div>
-          <div class="col">
-            <label for="from-station">Thời gian khởi hành</label>
-            <input
-              name="departure"
-              type="time"
-              {...register("departure")}
-              className={`form-control ${errors.departure ? "is-invalid" : ""}`}
-            />
-            <div className="invalid-feedback">{errors.departure?.message}</div>
-          </div>
         </div>
         <div class="row">
           <div class="col">
@@ -154,16 +159,6 @@ function AddCar() {
               className={`form-control ${errors.capacity ? "is-invalid" : ""}`}
             />
             <div className="invalid-feedback">{errors.capacity?.message}</div>
-          </div>
-          <div class="col">
-            <label for="from-time">Thời gian đến</label>
-            <input
-              name="arrival"
-              type="time"
-              {...register("arrival")}
-              className={`form-control ${errors.arrival ? "is-invalid" : ""}`}
-            />
-            <div className="invalid-feedback">{errors.arrival?.message}</div>
           </div>
         </div>
         <div class="row">
@@ -181,7 +176,6 @@ function AddCar() {
               {errors.plate_number?.message}
             </div>
           </div>
-          <div class="col"></div>
         </div>
         <div class="row">
           <div class="col">
@@ -194,7 +188,6 @@ function AddCar() {
             onChange={handleImageChange}
             />
           </div>
-          <div class="col"></div>
         </div>
         <button type="submit" className="btn btn-primary mt-2">
           Tạo

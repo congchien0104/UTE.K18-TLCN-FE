@@ -25,6 +25,15 @@ function EditCompany() {
   const { errors } = formState;
   const { id } = useParams();
   let history = useHistory();
+  const [file, setFile] = useState();
+    //const [fileName, setFileName] = useState();
+
+  const handleImageChange = (e) => {
+    console.log(e.target.files[0]);
+    setFile(e.target.files[0]);
+    //setFileName(e.target.files[0].name);
+  };
+  
   const getCompany = (id) => {
     CompanyService.getCompany(id)
       .then((response) => {
@@ -98,6 +107,18 @@ function EditCompany() {
               className={`form-control ${errors.address ? "is-invalid" : ""}`}
             />
             <div className="invalid-feedback">{errors.address?.message}</div>
+          </div>
+          <div class="col"></div>
+        </div>
+        <div class="row">
+          <div class="col">
+          <label for="plate_number">Image</label>
+            <input
+                type="file"
+                class="form-control-file mb-4"
+                id="company-image"
+                onChange={handleImageChange}
+            />
           </div>
           <div class="col"></div>
         </div>

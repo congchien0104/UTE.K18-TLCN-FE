@@ -3,28 +3,29 @@ import { Link } from "react-router-dom";
 import CarService from "../../services/car.service";
 import Pagination from "react-responsive-pagination";
 import CarModal from "../../Modals/CarModal";
+import companyService from "../../services/company.service";
 
 function CarList(props) {
   const [cars, setCars] = useState([]);
-  const [count, setCount] = useState();
-  const [totalPages, setTotalPage] = useState();
-  const [currentPage, setCurrentPage] = useState(1);
+  //const [count, setCount] = useState();
+  // const [totalPages, setTotalPage] = useState();
+  // const [currentPage, setCurrentPage] = useState(1);
 
-  function handlePageChange(page) {
-    setCurrentPage(page);
-    // ... do something with `page`
-  }
+  // function handlePageChange(page) {
+  //   setCurrentPage(page);
+  //   // ... do something with `page`
+  // }
+  const id = 37;
   useEffect(() => {
     retrieveCars();
-    console.log(cars);
-  }, [currentPage]);
+  }, []);
 
   const retrieveCars = () => {
-    CarService.getCarList(currentPage)
+    companyService.getCompany(id)
       .then((response) => {
         //setCategories(response.data);
-        setCars(response.data.data.cars.rows);
-        setCount(response.data.data.cars.count);
+        setCars(response.data.data.result.company.cars);
+        //setCount(response.data.data.cars.count);
         console.log(response.data.data);
       })
       .catch((e) => {
@@ -35,22 +36,9 @@ function CarList(props) {
     <div className="car-list-admin">
       <div className="car-top-admin row">
         <div className="button-top col-md-2">
-          <Link to={"/cars/add"} className="btn btn-primary">
+          <Link to={"/company/cars/2"} className="btn btn-primary">
             <i class="fas fa-plus"></i>  Create Car
           </Link>
-        </div>
-        <div className="search-top col-md-10">
-          <form className="row">
-            <input
-              className="form-control offset-3 col-md-3 mr-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-primary" type="submit">
-              Search
-            </button>
-          </form>          
         </div>
       </div>
       <table className="table table-bordered table-hover car-table mt-5">
@@ -77,38 +65,31 @@ function CarList(props) {
                 <td>{car.capacity}</td>
                 <td>{car.station}</td>
                 <td>{formatDate(car.createdAt)}</td>
-                <td><img src={car.image} alt={car.name} /></td>
+                <td>
+                  <div className="carlist-img"><img src={car.image} alt={car.name} /></div>
+                </td>
                 <td><CarModal data={car}/></td>
                 <td>
                   <Link to={`/cars/${car.id}`}>
                     <button type="button" class="btn btn-primary">
                       Edit
                     </button>
-                  </Link>
-                  <button
-                    type="button"
-                    class="btn btn-danger ml-2"
-                    onClick={() => {
-                      const confirmBox = window.confirm(
-                        "Do you really want to delete this Category?"
-                      );
-                      if (confirmBox === true) {
-                        alert("okkk");
-                      }
-                    }}
-                  >
-                    Delete
-                  </button>
+                  </Link >
+                  <Link to={`/company/cars/line/${car.id}`}>
+                    <button type="button" class="btn btn-warnimg">
+                      Chọn Tuyến
+                    </button>
+                  </Link >
                 </td>
               </tr>
             ))}
         </tbody>
       </table>
-      <Pagination 
+      {/* <Pagination 
         total={Math.ceil(count/8)}
         current={currentPage}
         onPageChange={page => handlePageChange(page)}
-      />
+      /> */}
     </div>
   );
 }

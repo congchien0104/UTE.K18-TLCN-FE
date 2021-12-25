@@ -9,7 +9,14 @@ const getReservations = (page) => {
   });
 };
 
+const getReservationsOfCar = (id) => {
+  return axios.get(API_URL + `reservations/${id}`, {
+    headers: authHeader(),
+  });
+};
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getReservations,
+  getReservationsOfCar
 };

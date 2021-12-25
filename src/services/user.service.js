@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "../services/auth-service";
 
-const API_URL = "http://localhost:8080/user/";
+const API_URL = "http://localhost:8080/api/admin/";
 
 const getUserList = (page) => {
   return axios.get(API_URL + `users?page=${page}`, {

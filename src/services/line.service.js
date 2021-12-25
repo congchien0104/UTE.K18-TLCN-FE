@@ -1,10 +1,10 @@
 import axios from "axios";
-import authHeader from "../services/auth-service";
+import authHeader from "./auth-service";
 
 const API_URL = "http://localhost:8080/";
 
-const create = (data) => {
-  return axios.post(API_URL + "route", data, {
+const create = (id, data) => {
+  return axios.post(API_URL + `lines/${id}`, data, {
     headers: authHeader(),
   });
 };

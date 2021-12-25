@@ -61,7 +61,9 @@ function CompanyList(props) {
                 <td>{company.name}</td>
                 <td>{company.phone}</td>
                 <td>{company.address}</td>
-                <td><img src={company.image} alt={company.name}/></td>
+                <td>
+                  <div className="carlist-img"><img src={company.image} alt={company.name} /></div>
+                </td>
                 <td>
                   {company.disabled ? ( <button className="btn btn-warning" onClick={ ()=> handleAccept(company.id)}>Accept</button> ) : 
                     (

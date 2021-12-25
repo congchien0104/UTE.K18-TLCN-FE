@@ -52,9 +52,6 @@ function UserList(props) {
       <div className="search-user">
         <form className="row justify-content-center">
           <input name="search" onChange={(e)=> setSearch(e.target.value)} class="form-control col-md-3 mr-2" type="search" placeholder="Search" aria-label="Search" />
-          <button class="btn btn-outline-primary" type="submit">
-            Search
-          </button>
         </form>
       </div>
       <div className="users-table">

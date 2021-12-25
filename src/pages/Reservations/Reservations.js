@@ -46,11 +46,10 @@ function Reservations(props) {
             <tr>
               <th scope="col">STT</th>
               <th scope="col">Name</th>
-              <th scope="col">Content</th>
-              <th scope="col">Rating</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Email</th>
               <th scope="col">Car</th>
               <th scope="col">CreatedDate</th>
-              <th scope="col">UpdatedDate</th>
             </tr>
           </thead>
           <tbody>
@@ -61,8 +60,8 @@ function Reservations(props) {
                   <td>{item.fullname}</td>
                   <td>{item.phone}</td>
                   <td>{item.email}</td>
+                  <td>{item.carId}</td>
                   <td>{formatDate(item.createdAt)}</td>
-                  <td>{formatDate(item.updatedAt)}</td>
                 </tr>
               ))}
           </tbody>
