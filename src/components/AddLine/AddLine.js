@@ -4,34 +4,35 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useParams, useHistory } from "react-router-dom";
 import lineService from "../../services/line.service";
+import { SuccessNotify } from "../../utils/Notify";
 
 const dayArray = [
     {
-        id: 0,
+        id: 1,
         name: "Thứ 2"
     },
     {
-        id: 1,
+        id: 2,
         name: "Thứ 3"
     },
     {
-        id: 2,
+        id: 3,
         name: "Thứ 4"
     },
     {
-        id: 3,
+        id: 4,
         name: "Thứ 5"
     },
     {
-        id: 4,
+        id: 5,
         name: "Thứ 6"
     },
     {
-        id: 5,
+        id: 6,
         name: "Thứ 7"
     },
     {
-        id: 6,
+        id: 0,
         name: "Chủ Nhật"
     }
 ];
@@ -79,7 +80,8 @@ function AddLine() {
     }
     lineService.create(id, temp)
     .then((response) => {
-        console.log(response.data.data);
+      reset();
+      SuccessNotify("Tạo Tuyến Thành Công");
     })
     .catch((e) => {
         console.log(e);

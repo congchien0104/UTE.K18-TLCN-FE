@@ -5,6 +5,7 @@ import CheckButton from "react-validation/build/button";
 import { useHistory } from "react-router-dom";
 
 import AuthService from "../../services/auth.service";
+import { ErrorNotify, SuccessNotify } from "../../utils/Notify";
 
 const required = (value) => {
   if (!value) {
@@ -48,7 +49,8 @@ const Login = (props) => {
       AuthService.login(username, password).then(
         () => {
           history.push("/home");
-          window.location.reload();
+          SuccessNotify("Đăng Nhập Thành Công");
+          //window.location.reload();
         },
         (error) => {
           const resMessage =
@@ -59,6 +61,7 @@ const Login = (props) => {
             error.toString();
 
           setLoading(false);
+          ErrorNotify(resMessage);
           setMessage(resMessage);
         }
       );

@@ -7,6 +7,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import storage from "../../firebase";
 import companyService from "../../services/company.service";
+import { SuccessNotify } from "../../utils/Notify";
 
 function AddCar() {
   // form validation rules
@@ -58,44 +59,16 @@ function AddCar() {
                         console.log(data);
                         companyService.createCar(id, data)
                           .then((response) => {
-                            console.log(response.data);
                             history.push("/company/cars");
+                            SuccessNotify("Tạo Nhà Xe Thành Công");
                           })
                           .catch((e) => {
                             console.log(e);
                           });
-                        // const result = await createServiceApi(payload);
-                        // if (result.code === 201) {
-                        //     notifySuccess('Đã tạo dịch vụ mới');
-                        //     history.push('/business-dashboard/services');
-                        // } else {
-                        //     notifyError(result.message);
-                        // }
                     }
                 );
             }
         );
-    // display form data on success
-    // var temp = new FormData();
-    // //temp.append("filename", fileName);
-    // temp.append("file", file);
-    // imageService.upload(temp)
-    // .then((response) => {
-    //   console.log("success Image");
-    // })
-    // .catch((e) => {
-    //   console.log(e);
-    // });
-    // CompanyService.createCar(id, data)
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     history.push("/cars");
-    //   })
-    //   .catch((e) => {
-    //     console.log(e);
-    //   });
-    alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
-    return false;
   }
   return (
     <div className="container mt-5">

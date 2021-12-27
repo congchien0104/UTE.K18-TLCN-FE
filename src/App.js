@@ -20,6 +20,8 @@ import FeedbackHome from "./pages/Feedbacks/FeedbackHome";
 import FeedbackOfCar from "./pages/Feedbacks/FeedbackOfCar";
 import ReservationOfCar from "./pages/Reservations/ReservationOfCar";
 import ReservationHome from "./pages/Reservations/ReservationHome";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -87,6 +89,19 @@ function App() {
           </Switch>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        />
+        {/* Same as */}
+      <ToastContainer />
     </div>
   );
 }
