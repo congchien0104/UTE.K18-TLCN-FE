@@ -15,8 +15,15 @@ const getSearchUser = (page,search) => {
   });
 }
 
+const disabledUser = (id, data) => {
+  return axios.put(API_URL + `users/${id}`, data, {
+    headers: authHeader(),
+  });
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getUserList,
   getSearchUser,
+  disabledUser
 };

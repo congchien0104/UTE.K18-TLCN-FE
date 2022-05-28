@@ -37,7 +37,7 @@ const dayArray = [
     }
 ];
 
-function AddLine() {
+function AddLine2() {
   // form validation rules
   const validationSchema = Yup.object().shape({
     start: Yup.string()
@@ -75,13 +75,14 @@ function AddLine() {
         arrival_time: data.arrival_time,
         innitiated_date: data.innitiated_date,
         weekdays: dayOfWeek,
+        status_trip: true,
         start_route_trip: data.start_route_trip,
         des_route_trip: data.des_route_trip
     }
     lineService.create(id, temp)
     .then((response) => {
       reset();
-      SuccessNotify("Tạo Tuyến Thành Công");
+      SuccessNotify("Tạo Tuyến Khứ Hồi Thành Công");
     })
     .catch((e) => {
         console.log(e);
@@ -89,7 +90,7 @@ function AddLine() {
   }
   return (
     <div className="container mt-5">
-      <h2>Tạo Tuyến Xe</h2>
+      <h2>Tạo Tuyến Khứ Hồi</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div class="row">
           <div class="col">
@@ -202,4 +203,4 @@ function AddLine() {
   );
 }
 
-export default AddLine;
+export default AddLine2;

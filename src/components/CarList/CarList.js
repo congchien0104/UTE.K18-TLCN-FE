@@ -7,6 +7,7 @@ import companyService from "../../services/company.service";
 
 function CarList(props) {
   const [cars, setCars] = useState([]);
+  const [line, setLine] = useState([]);
   //const [count, setCount] = useState();
   // const [totalPages, setTotalPage] = useState();
   // const [currentPage, setCurrentPage] = useState(1);
@@ -15,29 +16,30 @@ function CarList(props) {
   //   setCurrentPage(page);
   //   // ... do something with `page`
   // }
-  const id = 37;
+  //const id = 37;
   useEffect(() => {
     retrieveCars();
   }, []);
 
   const retrieveCars = () => {
-    companyService.getCompany(id)
+    companyService.getCompany()
       .then((response) => {
         //setCategories(response.data);
         setCars(response.data.data.result.company.cars);
-        //setCount(response.data.data.cars.count);
+        setLine(response.data.data.company.company.cars.lines);
         console.log(response.data.data);
       })
       .catch((e) => {
         console.log(e);
       });
   };
+  console.log(cars);
   return (
     <div className="car-list-admin">
       <div className="car-top-admin row">
         <div className="button-top col-md-2">
           <Link to={"/company/cars/2"} className="btn btn-primary">
-            <i class="fas fa-plus"></i>  Create Car
+            <i class="fas fa-plus"></i>  Tạo Xe
           </Link>
         </div>
       </div>
@@ -51,7 +53,7 @@ function CarList(props) {
             <th scope="col">Station</th>
             <th scope="col">CreatedDate</th>
             <th scope="col">Image</th>
-            <th scope="col">Details</th>
+            {/* <th scope="col">Details</th> */}
             <th scope="col">Option</th>
           </tr>
         </thead>
@@ -68,16 +70,21 @@ function CarList(props) {
                 <td>
                   <div className="carlist-img"><img src={car.image} alt={car.name} /></div>
                 </td>
-                <td><CarModal data={car}/></td>
+                {/* <td><CarModal data={car}/></td> */}
                 <td>
                   <Link to={`/cars/${car.id}`}>
                     <button type="button" class="btn btn-primary">
-                      Edit
+                      Cập Nhật Xe
                     </button>
                   </Link >
-                  <Link to={`/company/cars/line/${car.id}`}>
-                    <button type="button" class="btn btn-warnimg">
-                      Chọn Tuyến
+                  <Link to={`/company/cars/line/edit/${car.id}`}>
+                    <button type="button" class="btn btn-warning">
+                      Tuyến
+                    </button>
+                  </Link >
+                  <Link to={`/company/cars/line2/edit/${car.id}`}>
+                    <button type="button" class="btn btn-warning">
+                      Tuyến Khứ Hồi
                     </button>
                   </Link >
                 </td>

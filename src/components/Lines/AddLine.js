@@ -75,13 +75,15 @@ function AddLine() {
         arrival_time: data.arrival_time,
         innitiated_date: data.innitiated_date,
         weekdays: dayOfWeek,
+        status_trip: false,
         start_route_trip: data.start_route_trip,
         des_route_trip: data.des_route_trip
     }
     lineService.create(id, temp)
-    .then((response) => {
+    .then((res) => {
       reset();
       SuccessNotify("Tạo Tuyến Thành Công");
+      history.push(`/company/cars/line2/${id}`);
     })
     .catch((e) => {
         console.log(e);

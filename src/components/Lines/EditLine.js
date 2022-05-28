@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -37,7 +37,7 @@ const dayArray = [
     }
 ];
 
-function AddLine() {
+function EditLine() {
   // form validation rules
   const validationSchema = Yup.object().shape({
     start: Yup.string()
@@ -50,12 +50,35 @@ function AddLine() {
   const formOptions = { resolver: yupResolver(validationSchema) };
 
   // get functions to build form with useForm() hook
-  const { register, handleSubmit, reset, formState } = useForm(formOptions);
+  const { register, handleSubmit, reset, formState, setValue } = useForm(formOptions);
   const { errors } = formState;
   const { id } = useParams();
   let history = useHistory();
   const [dayOfWeek, setDayOfWeek] = useState([]);
-  
+
+  const getLine = (id) => {
+    lineService.getLine(id)
+      .then((response) => {
+        console.log(response.data);
+        const fields = ["start", "destination", "departure_time", "arrival_time", "innitiated_date", "weekdays", "start_route_trip", "des_route_trip"];
+        fields.forEach((field) => {
+            if(field === "innitiated_date"){
+                const temp = formatDate(response.data.data.lines[field]);
+                console.log(temp);
+                setValue(field, temp);
+            }else{
+                setValue(field, response.data.data.lines[field]);
+            }
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  useEffect(() => {
+    getLine(id);
+  }, [id]);
 
   const handleDayOfWeek = async (e) => {
         console.log(e.target.checked);
@@ -75,13 +98,13 @@ function AddLine() {
         arrival_time: data.arrival_time,
         innitiated_date: data.innitiated_date,
         weekdays: dayOfWeek,
+        status_trip: false,
         start_route_trip: data.start_route_trip,
         des_route_trip: data.des_route_trip
     }
-    lineService.create(id, temp)
+    lineService.update(id, temp)
     .then((response) => {
-      reset();
-      SuccessNotify("Tạo Tuyến Thành Công");
+      SuccessNotify("Chỉnh Sửa Tuyến Thành Công");
     })
     .catch((e) => {
         console.log(e);
@@ -195,11 +218,23 @@ function AddLine() {
             </div>
         </div>
         <button type="submit" className="btn btn-primary mt-2">
-          Tạo
+          Cập Nhật
         </button>
       </form>
     </div>
   );
 }
 
-export default AddLine;
+const formatDate = (date) => {
+    var d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+  
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+  
+    return [year, month, day].join("-");
+  };
+
+export default EditLine;

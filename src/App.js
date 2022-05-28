@@ -15,13 +15,16 @@ import AddCar from "./components/AddCar/AddCar";
 import EditCar from "./components/EditCar/EditCar";
 import EditCompany from "./components/EditCompany/EditCompany";
 import ViewCar from "./components/ViewCar/ViewCar";
-import AddLine from "./components/AddLine/AddLine";
 import FeedbackHome from "./pages/Feedbacks/FeedbackHome";
 import FeedbackOfCar from "./pages/Feedbacks/FeedbackOfCar";
 import ReservationOfCar from "./pages/Reservations/ReservationOfCar";
 import ReservationHome from "./pages/Reservations/ReservationHome";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import AddLine2 from "./components/Lines/AddLine2";
+import AddLine from "./components/Lines/AddLine";
+import EditLine from "./components/Lines/EditLine";
+import EditLine2 from "./components/Lines/EditLine2";
 
 function App() {
   return (
@@ -45,6 +48,21 @@ function App() {
               exact
               path="/company/cars/line/:id"
               component={() => <AddLine />}
+            />
+            <Route
+              exact
+              path="/company/cars/line2/:id"
+              component={() => <AddLine2 />}
+            />
+            <Route
+              exact
+              path="/company/cars/line/edit/:id"
+              component={() => <EditLine />}
+            />
+            <Route
+              exact
+              path="/company/cars/line2/edit/:id"
+              component={() => <EditLine2 />}
             />
             <Route
               exact

@@ -50,7 +50,7 @@ function CompanyList(props) {
             <th>State</th>
             <th>CreatedDate</th>
             <th>Car List</th>
-            <th>Option</th>
+            {/* <th>Option</th> */}
           </tr>
         </thead>
         <tbody>
@@ -81,7 +81,7 @@ function CompanyList(props) {
                     </button>
                   </Link>
                 </td>
-                <td>
+                {/* <td>
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                     Details {index + 1}
                   </button>
@@ -114,7 +114,7 @@ function CompanyList(props) {
                   >
                     Delete
                   </button>
-                </td>
+                </td> */}
               </tr>
             ))}
         </tbody>

@@ -55,7 +55,7 @@ function EditCar() {
     CarService.getCar(id)
       .then((response) => {
         console.log(response.data.data.car);
-        const fields = ["name", "plate_number", "capacity", "station"];
+        const fields = ["name", "plate_number", "capacity", "station", "station_to", "price"];
         //response.data['gender'] = "M";
         fields.forEach((field) => {
           setValue(field, response.data.data.car[field]);
@@ -112,29 +112,18 @@ function EditCar() {
   }
   return (
     <div className="container mt-5">
-      <h2>Tạo Nhà Xe</h2>
+      <h2>Cập Nhật Nhà Xe</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div class="row">
           <div class="col">
             <label for="carName">Tên xe</label>
             <input
-              disabled
               name="name"
               type="text"
               {...register("name")}
               className={`form-control ${errors.name ? "is-invalid" : ""}`}
             />
             <div className="invalid-feedback">{errors.name?.message}</div>
-          </div>
-          <div class="col">
-            <label for="from-station">Điểm đi</label>
-            <input
-              name="start"
-              type="text"
-              {...register("start")}
-              className={`form-control ${errors.start ? "is-invalid" : ""}`}
-            />
-            <div className="invalid-feedback">{errors.start?.message}</div>
           </div>
         </div>
         <div class="row mt-2">
@@ -148,19 +137,17 @@ function EditCar() {
             />
             <div className="invalid-feedback">{errors.station?.message}</div>
           </div>
+        </div>
+        <div class="row mt-2">
           <div class="col">
-            <label for="to-station">Điểm đến</label>
+            <label for="station_to">Bến Đến</label>
             <input
-              name="destination"
+              name="station_to"
               type="text"
-              {...register("destination")}
-              className={`form-control ${
-                errors.destination ? "is-invalid" : ""
-              }`}
+              {...register("station_to")}
+              className={`form-control ${errors.station_to ? "is-invalid" : ""}`}
             />
-            <div className="invalid-feedback">
-              {errors.destination?.message}
-            </div>
+            <div className="invalid-feedback">{errors.station_to?.message}</div>
           </div>
         </div>
         <div class="row">
@@ -174,16 +161,6 @@ function EditCar() {
             />
             <div className="invalid-feedback">{errors.price?.message}</div>
           </div>
-          <div class="col">
-            <label for="from-station">Thời gian khởi hành</label>
-            <input
-              name="departure"
-              type="time"
-              {...register("departure")}
-              className={`form-control ${errors.departure ? "is-invalid" : ""}`}
-            />
-            <div className="invalid-feedback">{errors.departure?.message}</div>
-          </div>
         </div>
         <div class="row">
           <div class="col">
@@ -195,16 +172,6 @@ function EditCar() {
               className={`form-control ${errors.capacity ? "is-invalid" : ""}`}
             />
             <div className="invalid-feedback">{errors.capacity?.message}</div>
-          </div>
-          <div class="col">
-            <label for="from-time">Thời gian đến</label>
-            <input
-              name="arrival"
-              type="time"
-              {...register("arrival")}
-              className={`form-control ${errors.arrival ? "is-invalid" : ""}`}
-            />
-            <div className="invalid-feedback">{errors.arrival?.message}</div>
           </div>
         </div>
         <div class="row">
@@ -222,22 +189,21 @@ function EditCar() {
               {errors.plate_number?.message}
             </div>
           </div>
-          <div class="col"></div>
         </div>
         <div class="row">
           <div class="col">
-            <label for="plate_number">Image</label>
+            <label for="image">Image</label>
             <input
-                type="file"
-                class="form-control-file mb-4"
-                id="company-image"
-                onChange={handleImageChange}
+            type="file"
+            class="form-control-file"
+            id="exampleFormControlFile1"
+            name="image"
+            onChange={handleImageChange}
             />
           </div>
-          <div class="col"></div>
         </div>
-        <button type="submit" className="btn btn-primary">
-          Tạo
+        <button type="submit" className="btn btn-primary mt-2">
+          Cập Nhật
         </button>
       </form>
     </div>

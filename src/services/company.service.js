@@ -16,8 +16,8 @@ const createCar = (id, data) => {
   });
 };
 
-const getCompany = (id) => {
-  return axios.get(API_URL + `companies/${id}`, {
+const getCompany = () => {
+  return axios.get(API_URL + `companies/cars`, {
     headers: authHeader(),
   });
 };

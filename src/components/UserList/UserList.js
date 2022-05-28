@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import UserService from "../../services/user.service";
 import Pagination from "react-responsive-pagination";
 import UserModal from "../../Modals/UserModal";
+import userService from "../../services/user.service";
+import { SuccessNotify } from "../../utils/Notify";
 
 function UserList(props) {
   const [users, setUsers] = useState([]);
@@ -46,7 +48,19 @@ function UserList(props) {
     });
   }, [search]);
 
-  const updateDisabled = (data) => {};
+  const handleDisabled = (user) => {
+    var temp = {
+      disabled: !user.disabled
+    };
+    userService.disabledUser(user.id, temp)
+    .then((response) => {
+      retrieveUsers();
+      SuccessNotify("Thành Công");
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  };
   return (
     <div className="user-list-admin">
       <div className="search-user">
@@ -63,7 +77,6 @@ function UserList(props) {
               <th>Email</th>
               <th>FullName</th>
               <th>CreatedDate</th>
-              <th>Details</th>
               <th>Option</th>
             </tr>
           </thead>
@@ -85,24 +98,16 @@ function UserList(props) {
                     </button>
                   </td> */}
                   <td>{formatDate(user.createdAt)}</td>
-                  <td><UserModal data={user}/></td>
                   <td>
-                    <button type="button" class="btn btn-primary">
+                    {/* <button type="button" class="btn btn-primary">
                       Edit
-                    </button>
+                    </button> */}
                     <button
                       type="button"
-                      class="btn btn-danger ml-2"
-                      onClick={() => {
-                        const confirmBox = window.confirm(
-                          "Do you really want to delete this User?"
-                        );
-                        if (confirmBox === true) {
-                          alert("okkk");
-                        }
-                      }}
+                      class={user.disabled ? "btn btn-success ml-2": "btn btn-danger ml-2"}
+                      onClick={() => handleDisabled(user)}
                     >
-                      Lock
+                      {user.disabled ? "Unlock" : "Lock"}
                     </button>
                   </td>
                 </tr>

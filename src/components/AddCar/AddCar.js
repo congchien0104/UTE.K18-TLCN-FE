@@ -58,9 +58,10 @@ function AddCar() {
                         data.image = downloadURL;
                         console.log(data);
                         companyService.createCar(id, data)
-                          .then((response) => {
-                            history.push("/company/cars");
+                          .then((res) => {
+                            console.log(res.data);
                             SuccessNotify("Tạo Nhà Xe Thành Công");
+                            history.push(`/company/cars/line/${res.data.data.id}`);
                           })
                           .catch((e) => {
                             console.log(e);
