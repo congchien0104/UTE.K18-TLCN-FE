@@ -41,7 +41,6 @@ function EditCar() {
   const getCar = (id) => {
     CarService.getCar(id)
       .then((response) => {
-        console.log(response.data.data.car);
         const fields = ["name", "plate_number", "capacity", "station"];
         //response.data['gender'] = "M";
         fields.forEach((field) => {
@@ -61,7 +60,6 @@ function EditCar() {
     // display form data on success
     CarService.update(id, data)
       .then((response) => {
-        console.log(response.data);
         history.push("/cars");
       })
       .catch((e) => {

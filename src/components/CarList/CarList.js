@@ -6,15 +6,13 @@ function CarList(props) {
   const [cars, setCars] = useState([]);
   useEffect(() => {
     retrieveCars();
-    console.log(cars);
   }, []);
-
+  // console.log(cars.rows)
   const retrieveCars = () => {
     CarService.getCarList()
       .then((response) => {
         //setCategories(response.data);
         setCars(response.data.data.cars);
-        console.log(response.data.data.cars);
       })
       .catch((e) => {
         console.log(e);
@@ -39,8 +37,8 @@ function CarList(props) {
           </tr>
         </thead>
         <tbody>
-          {cars &&
-            cars.map((car, index) => (
+          {cars.rows &&
+            cars.rows.map((car, index) => (
               <tr key={index}>
                 <th scope="row">{index + 1}</th>
                 <td>{car.name}</td>

@@ -28,7 +28,6 @@ function EditCompany() {
   const getCompany = (id) => {
     CompanyService.getCompany(id)
       .then((response) => {
-        console.log(response.data.data.company);
         const fields = ["name", "phone", "address"];
         //response.data['gender'] = "M";
         fields.forEach((field) => {

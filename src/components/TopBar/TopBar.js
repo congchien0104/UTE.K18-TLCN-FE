@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 
@@ -12,37 +13,35 @@ const TopBar = (props) => {
     if (user) {
       setCurrentUser(user);
     }
-    console.log(user);
   }, []);
 
   const logOut = () => {
     AuthService.logout();
     setCurrentUser(undefined);
   };
-
-  console.log(currentUser);
+  console.log("Current user: ",currentUser);
   return (
-    <nav className="navbar navbar-dark bg-primary">
-      <Link to={"/"} className="navbar-brand" style={{ paddingLeft: "15px" }}>
-        ADMIN
-      </Link>
-      {currentUser ? (
-        <ul className="navbar-nav navbar-register">
-          <li className="nav-item">
-            <Link to={"/login"} className="nav-link" onClick={logOut}>
-              Logout
+    <nav className="navbar navbar-dark bg-secondary">
+      <div className="container-fluid">
+        <div className="d-flex align-items-center">
+          <p className="fs-4 fw-bolder text-white mb-0" style={{"marginRight":"4.6rem"}}>Adminstrator</p>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+        {currentUser ? (
+          <div className="d-flex align-items-center">
+            <p className="text-white fst-italic fw-bolder fs-5 mb-0">Xin chào {currentUser.username}</p>
+            <Link to={"/login"} className="nav-link text-white fs-5 fw-bolder ml-auto" onClick={logOut}>
+              Đăng xuất
             </Link>
-          </li>
-        </ul>
-      ) : (
-        <ul className="navbar-nav navbar-register">
-          <li className="nav-item">
-            <Link to={"/login"} className="nav-link">
-              Login
-            </Link>
-          </li>
-        </ul>
-      )}
+          </div>
+        ) : (
+          <Link to={"/login"} className="nav-link text-white fs-5 fw-bolder ml-auto">
+            Đăng nhập
+          </Link>
+        )}
+      </div>
     </nav>
   );
 };

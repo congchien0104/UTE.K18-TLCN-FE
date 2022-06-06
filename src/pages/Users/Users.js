@@ -3,8 +3,8 @@ import UserList from "../../components/UserList/UserList";
 
 function Users(props) {
   return (
-    <div>
-      <h2>User List</h2>
+    <div className="container-fluid">
+      <h2 className="text-center mb-4">Danh sách người dùng</h2>
       <UserList />
     </div>
   );

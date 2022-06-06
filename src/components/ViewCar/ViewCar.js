@@ -11,7 +11,6 @@ function ViewCar(props) {
     CompanyService.getCompany(id)
       .then((response) => {
         setCars(response.data.data.company.cars);
-        console.log(response.data.data.company.cars);
       })
       .catch((e) => {
         console.log(e);

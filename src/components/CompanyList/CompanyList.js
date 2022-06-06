@@ -6,7 +6,6 @@ function CompanyList(props) {
   const [companies, setCompanies] = useState([]);
   useEffect(() => {
     retrieveCompanies();
-    console.log(companies);
   }, []);
 
   const retrieveCompanies = () => {
@@ -14,7 +13,6 @@ function CompanyList(props) {
       .then((response) => {
         //setCategories(response.data);
         setCompanies(response.data.data.companies);
-        console.log(response.data.data.companies);
       })
       .catch((e) => {
         console.log(e);
