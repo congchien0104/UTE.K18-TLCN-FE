@@ -9,16 +9,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const temp = [
   {
-    time: '11:00:00',
-    address: 'Eahleo'
+    time: "11:00:00",
+    address: "Eahleo",
   },
   {
-    time: '11:00:00',
-    address: 'Eahleo'
+    time: "11:00:00",
+    address: "Eahleo",
   },
   {
-    time: '11:00:00',
-    address: 'Eahleo'
+    time: "11:00:00",
+    address: "Eahleo",
   },
 ];
 
@@ -37,30 +37,37 @@ function AddJourney() {
   const { id } = useParams();
   let history = useHistory();
   let dataSave = [];
+  const [time, setTime] = useState();
+  const [address, setAddress] = useState();
 
-  const handleAddressTo = () => {
+  const handleAddressTo = (e) => {
+    e.preventDefault();
     const dataTo = {
-      time_hour: '',
-      address: '',
+      time_hour: time || "",
+      address: address || "",
       status: false,
       lineId: id,
-    }
+    };
+    console.log(dataTo);
     dataSave.push(dataTo);
-  }
+  };
 
-  const handleAddressDes = () => {
+  const handleAddressDes = (e) => {
+    e.preventDefault();
     const dataDes = {
-      time_hour: '',
-      address: '',
+      time_hour: time || "",
+      address: address || "",
       status: true,
       lineId: id,
-    }
+    };
+    console.log(dataDes);
     dataSave.push(dataDes);
-  }
+  };
 
   function onSubmit(data) {
     console.log("dkm", data);
-    companyService.createJourney(id, data)
+    companyService
+      .createJourney(id, data)
       .then((res) => {
         console.log(res.data);
         SuccessNotify("Tạo Hanh Trinh Thành Công");
@@ -73,153 +80,105 @@ function AddJourney() {
   return (
     <div className="container">
       <h2>Tạo Hành Trình</h2>
-      {/* <div className="row">
-        <div className="col-6">
-          {
-            temp.map((item) => (
-              <label>Thời Gian: {item.time} - {item.address}</label>
-            ))
-          }
-        </div>
-        <div className="col-6">
-          {
-            temp.map((item) => (
-              <label>Thời Gian: {item.time} - {item.address}</label>
-            ))
-          }
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-6">
-          <label for="time_hour">Thời Gian</label>
-          <input
-            name="time_hour"
-            type="time"
-            {...register("time_hour")}
-            className={`form-control ${errors.time_hour ? "is-invalid" : ""}`}
-          />
-          <div className="invalid-feedback">{errors.time_hour?.message}</div>
-        </div>
-        <div className="col-6">
-          <label for="time_hour">Thời Gian</label>
-          <input
-            name="time_hour"
-            type="time"
-            {...register("time_hour")}
-            className={`form-control ${errors.time_hour ? "is-invalid" : ""}`}
-          />
-          <div className="invalid-feedback">{errors.time_hour?.message}</div>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col">
-          <label for="station">Địa chỉ</label>
-          <input
-            name="address"
-            type="text"
-            {...register("address")}
-            className={`form-control ${errors.address ? "is-invalid" : ""}`}
-          />
-          <div className="invalid-feedback">{errors.address?.message}</div>
-        </div>
-        <div className="col">
-          <label for="station">Địa chỉ</label>
-          <input
-            name="address"
-            type="text"
-            {...register("address")}
-            className={`form-control ${errors.address ? "is-invalid" : ""}`}
-          />
-          <div className="invalid-feedback">{errors.address?.message}</div>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col">
-          <button className="btn btn-primary mt-2" onClick={handleAddressTo}>
-            Thêm
-          </button>
-        </div>
-        <div className="col">
-          <button className="btn btn-primary mt-2" onClick={handleAddressDes}>
-            Thêm
-          </button>
-        </div>
-      </div> */}
       <div className="row">
         <div className="col-6 journey-start">
           <div className="card">
             <div className="card-body">
-              <div className="journey-block">
-                <label for="time_hour">Thời Gian</label>
-                <input
-                  name="time_hour"
-                  type="time"
-                  {...register("time_hour")}
-                  className={`form-control ${errors.time_hour ? "is-invalid" : ""}`}
-                />
-                <div className="invalid-feedback">{errors.time_hour?.message}</div>
-              </div>
-              <div className="journey-block mb-4">
-                <label for="station">Địa chỉ</label>
-                <input
-                  name="address"
-                  type="text"
-                  {...register("address")}
-                  className={`form-control ${errors.address ? "is-invalid" : ""}`}
-                />
-                <div className="invalid-feedback">{errors.address?.message}</div>
-              </div>
-              <div className="journey-block">
-                <button className="btn btn-primary" onClick={handleAddressTo}>
-                  Thêm điểm đón
-                </button>
-              </div>
+              <form>
+                <div className="journey-block">
+                  <label for="time_hour">Thời Gian</label>
+                  <input
+                    name="time_hour"
+                    type="time"
+                    onChange={(e) => setTime(e.target.value)}
+                    //{...register("time_hour")}
+                    className={`form-control ${
+                      errors.time_hour ? "is-invalid" : ""
+                    }`}
+                  />
+                  <div className="invalid-feedback">
+                    {errors.time_hour?.message}
+                  </div>
+                </div>
+                <div className="journey-block mb-4">
+                  <label for="station">Địa chỉ</label>
+                  <input
+                    name="address"
+                    type="text"
+                    onChange={(e) => setAddress(e.target.value)}
+                    //{...register("address")}
+                    className={`form-control ${
+                      errors.address ? "is-invalid" : ""
+                    }`}
+                  />
+                  <div className="invalid-feedback">
+                    {errors.address?.message}
+                  </div>
+                </div>
+                <div className="journey-block">
+                  <button type='submit' className="btn btn-primary" onClick={handleAddressTo}>
+                    Thêm điểm đón
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
           <div className="journey-list">
-            {
-              temp.map((item) => (
-                <p className="text-mute fs-5">Thời Gian: {item.time} - {item.address}</p>
-              ))
-            }
+            {temp.map((item) => (
+              <p className="text-mute fs-5">
+                Thời Gian: {item.time} - {item.address}
+              </p>
+            ))}
           </div>
         </div>
         <div className="col-6 journey-end">
           <div className="card">
             <div className="card-body">
-              <div className="journey-block">
-                <label for="time_hour">Thời Gian</label>
-                <input
-                  name="time_hour"
-                  type="time"
-                  {...register("time_hour")}
-                  className={`form-control ${errors.time_hour ? "is-invalid" : ""}`}
-                />
-                <div className="invalid-feedback">{errors.time_hour?.message}</div>
-              </div>
-              <div className="journey-block mb-4">
-                <label for="station">Địa chỉ</label>
-                <input
-                  name="address"
-                  type="text"
-                  {...register("address")}
-                  className={`form-control ${errors.address ? "is-invalid" : ""}`}
-                />
-                <div className="invalid-feedback">{errors.address?.message}</div>
-              </div>
-              <div className="journey-block">
-                <button className="btn btn-primary" onClick={handleAddressDes}>
-                  Thêm điểm trả
-                </button>
-              </div>
+              <form>
+                <div className="journey-block">
+                  <label for="time_hour">Thời Gian</label>
+                  <input
+                    name="time_hour"
+                    type="time"
+                    onChange={(e) => setTime(e.target.value)}
+                    //{...register("time_hour")}
+                    className={`form-control ${
+                      errors.time_hour ? "is-invalid" : ""
+                    }`}
+                  />
+                  <div className="invalid-feedback">
+                    {errors.time_hour?.message}
+                  </div>
+                </div>
+                <div className="journey-block mb-4">
+                  <label for="station">Địa chỉ</label>
+                  <input
+                    name="address"
+                    type="text"
+                    onChange={(e) => setAddress(e.target.value)}
+                    //{...register("address")}
+                    className={`form-control ${
+                      errors.address ? "is-invalid" : ""
+                    }`}
+                  />
+                  <div className="invalid-feedback">
+                    {errors.address?.message}
+                  </div>
+                </div>
+                <div className="journey-block">
+                  <button type='submit' className="btn btn-primary" onClick={handleAddressDes}>
+                    Thêm điểm đón
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
           <div className="journey-list">
-            {
-              temp.map((item) => (
-                <p className="text-mute fs-5">Thời Gian: {item.time} - {item.address}</p>
-              ))
-            }
+            {temp.map((item) => (
+              <p className="text-mute fs-5">
+                Thời Gian: {item.time} - {item.address}
+              </p>
+            ))}
           </div>
         </div>
       </div>
