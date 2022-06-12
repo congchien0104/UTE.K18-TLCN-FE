@@ -77,6 +77,12 @@ function SideBar(props) {
           showCompany && (
             <ul class="list-group">
               <Link
+                to="/company/statistical"
+                className="list-group-item list-group-item-action"
+              >
+                Thông Kê
+              </Link>
+              <Link
                 to="/company/cars"
                 className="list-group-item list-group-item-action"
               >

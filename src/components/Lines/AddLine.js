@@ -46,6 +46,13 @@ function AddLine() {
       .required("Destination is required"),
     departure_time: Yup.string().required("Departure is required"),
     arrival_time: Yup.string().required("Arrival is required"),
+    station: Yup.string()
+      .min(6, "Name must be at least 6 characters")
+      .required("Station is required"),
+    station_to: Yup.string()
+      .min(6, "Name must be at least 6 characters")
+      .required("Station is required"),
+    price: Yup.string().required("Last name is required"),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -68,6 +75,7 @@ function AddLine() {
   console.log(dayOfWeek);
 
   function onSubmit(data) {
+    console.log(data);
     var temp = {
         start: data.start,
         destination: data.destination,
@@ -75,15 +83,14 @@ function AddLine() {
         arrival_time: data.arrival_time,
         innitiated_date: data.innitiated_date,
         weekdays: dayOfWeek,
-        status_trip: false,
-        start_route_trip: data.start_route_trip,
-        des_route_trip: data.des_route_trip
+        station: data.station,
+        station_to: data.station_to,
+        price: data.price
     }
     lineService.create(id, temp)
-    .then((res) => {
+    .then((response) => {
       reset();
       SuccessNotify("Tạo Tuyến Thành Công");
-      history.push(`/company/cars/line2/${id}`);
     })
     .catch((e) => {
         console.log(e);
@@ -115,6 +122,42 @@ function AddLine() {
               className={`form-control ${errors.destination ? "is-invalid" : ""}`}
             />
             <div className="invalid-feedback">{errors.destination?.message}</div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col">
+            <label for="station">Bến xe</label>
+            <input
+              name="station"
+              type="text"
+              {...register("station")}
+              className={`form-control ${errors.station ? "is-invalid" : ""}`}
+            />
+            <div className="invalid-feedback">{errors.station?.message}</div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col">
+            <label for="station_to">Bến Đến</label>
+            <input
+              name="station_to"
+              type="text"
+              {...register("station_to")}
+              className={`form-control ${errors.station_to ? "is-invalid" : ""}`}
+            />
+            <div className="invalid-feedback">{errors.station_to?.message}</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label for="number-palte">Giá</label>
+            <input
+              name="price"
+              type="number"
+              {...register("price")}
+              className={`form-control ${errors.price ? "is-invalid" : ""}`}
+            />
+            <div className="invalid-feedback">{errors.price?.message}</div>
           </div>
         </div>
         <div class="row mt-2">
@@ -170,30 +213,6 @@ function AddLine() {
                         ))
                     }
                 </ul>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <label for="start_route_trip">Bắt Đầu (Khứ Hồi)</label>
-                <input
-                name="start_route_trip"
-                type="time"
-                {...register("start_route_trip")}
-                className={`form-control ${errors.start_route_trip ? "is-invalid" : ""}`}
-                />
-                <div className="invalid-feedback">{errors.start_route_trip?.message}</div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <label for="des_route_trip">Kết Thúc (Khứ Hồi</label>
-                <input
-                name="des_route_trip"
-                type="time"
-                {...register("des_route_trip")}
-                className={`form-control ${errors.des_route_trip ? "is-invalid" : ""}`}
-                />
-                <div className="invalid-feedback">{errors.des_route_trip?.message}</div>
             </div>
         </div>
         <button type="submit" className="btn btn-primary mt-2">

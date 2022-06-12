@@ -15,8 +15,15 @@ const getReservationsOfCar = (id) => {
   });
 };
 
+const getTotal = () => {
+  return axios.get(API_URL + 'payments/total', {
+    headers: authHeader(),
+  });
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getReservations,
-  getReservationsOfCar
+  getReservationsOfCar,
+  getTotal
 };

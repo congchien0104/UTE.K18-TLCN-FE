@@ -15,13 +15,8 @@ function AddCar() {
     name: Yup.string()
       .min(6, "Name must be at least 6 characters")
       .required("Name is required"),
-    station: Yup.string()
-      .min(6, "Name must be at least 6 characters")
-      .required("Station is required"),
-    station_to: Yup.string()
-      .min(6, "Name must be at least 6 characters")
-      .required("Station is required"),
-    price: Yup.string().required("Last name is required"),
+    type: Yup.string()
+      .min(6, "Type must be at least 6 characters"),
     capacity: Yup.string().required("Capcity is required"),
     plate_number: Yup.string()
       .min(6, "Destination must be at least 6 characters")
@@ -30,7 +25,7 @@ function AddCar() {
   const formOptions = { resolver: yupResolver(validationSchema) };
 
   // get functions to build form with useForm() hook
-  const { register, handleSubmit, reset, formState } = useForm(formOptions);
+  const { register, handleSubmit, formState } = useForm(formOptions);
   const { errors } = formState;
   const { id } = useParams();
   let history = useHistory();
@@ -42,6 +37,7 @@ function AddCar() {
 
 
   function onSubmit(data) {
+    console.log("dkm", data);
     const storageRef = ref(storage, 'cars/' + file.name);
         const uploadTask = uploadBytesResumable(storageRef, file);
         uploadTask.on(
@@ -89,38 +85,14 @@ function AddCar() {
         </div>
         <div class="row mt-2">
           <div class="col">
-            <label for="station">Bến xe</label>
+            <label for="station">Loại xe</label>
             <input
-              name="station"
+              name="type"
               type="text"
-              {...register("station")}
-              className={`form-control ${errors.station ? "is-invalid" : ""}`}
+              {...register("type")}
+              className={`form-control ${errors.type ? "is-invalid" : ""}`}
             />
-            <div className="invalid-feedback">{errors.station?.message}</div>
-          </div>
-        </div>
-        <div class="row mt-2">
-          <div class="col">
-            <label for="station_to">Bến Đến</label>
-            <input
-              name="station_to"
-              type="text"
-              {...register("station_to")}
-              className={`form-control ${errors.station_to ? "is-invalid" : ""}`}
-            />
-            <div className="invalid-feedback">{errors.station_to?.message}</div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <label for="number-palte">Giá</label>
-            <input
-              name="price"
-              type="number"
-              {...register("price")}
-              className={`form-control ${errors.price ? "is-invalid" : ""}`}
-            />
-            <div className="invalid-feedback">{errors.price?.message}</div>
+            <div className="invalid-feedback">{errors.type?.message}</div>
           </div>
         </div>
         <div class="row">
