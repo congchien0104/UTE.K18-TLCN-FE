@@ -21,9 +21,23 @@ const getTotal = () => {
   });
 }
 
+const getReservationList = (id, page) => {
+  return axios.get(API_URL + `reservations/${id}?page=${page}`, {
+    headers: authHeader(),
+  });
+};
+
+const getSearchReservation = (id, page,search) => {
+  return axios.get(API_URL + `reservations/${id}?page=${page}&search=${search}`, {
+    headers: authHeader(),
+  });
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getReservations,
   getReservationsOfCar,
-  getTotal
+  getTotal,
+  getReservationList,
+  getSearchReservation,
 };

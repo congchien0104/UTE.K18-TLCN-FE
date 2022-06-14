@@ -46,7 +46,7 @@ function UserList(props) {
     .catch((e) => {
       console.log(e);
     });
-  }, [search]);
+  }, [search, currentPage]);
 
   const handleDisabled = (user) => {
     var temp = {
