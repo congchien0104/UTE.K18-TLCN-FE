@@ -70,6 +70,7 @@ function ReservationOfCar() {
               <th scope="col">Nơi Trả</th>
               <th scope="col">Tên Xe</th>
               <th scope="col">Biển Số</th>
+              <th scope="col">Số Tiền Đã Trả</th>
             </tr>
           </thead>
           <tbody>
@@ -88,6 +89,7 @@ function ReservationOfCar() {
                   <td>{item.dropoff_place}</td>
                   <td>{item.cars.name}</td>
                   <td>{item.cars.plate_number}</td>
+                  <td>{item.paid_amount}</td>
                 </tr>
               ))}
           </tbody>

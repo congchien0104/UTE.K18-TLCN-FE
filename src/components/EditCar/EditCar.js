@@ -55,7 +55,7 @@ function EditCar() {
     CarService.getCar(id)
       .then((response) => {
         console.log(response.data.data.car);
-        const fields = ["name", "plate_number", "capacity", "station", "station_to", "price"];
+        const fields = ["name", "plate_number", "capacity"];
         //response.data['gender'] = "M";
         fields.forEach((field) => {
           setValue(field, response.data.data.car[field]);
@@ -124,42 +124,6 @@ function EditCar() {
               className={`form-control ${errors.name ? "is-invalid" : ""}`}
             />
             <div className="invalid-feedback">{errors.name?.message}</div>
-          </div>
-        </div>
-        <div class="row mt-2">
-          <div class="col">
-            <label for="station">Bến xe</label>
-            <input
-              name="station"
-              type="text"
-              {...register("station")}
-              className={`form-control ${errors.station ? "is-invalid" : ""}`}
-            />
-            <div className="invalid-feedback">{errors.station?.message}</div>
-          </div>
-        </div>
-        <div class="row mt-2">
-          <div class="col">
-            <label for="station_to">Bến Đến</label>
-            <input
-              name="station_to"
-              type="text"
-              {...register("station_to")}
-              className={`form-control ${errors.station_to ? "is-invalid" : ""}`}
-            />
-            <div className="invalid-feedback">{errors.station_to?.message}</div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <label for="number-palte">Giá</label>
-            <input
-              name="price"
-              type="number"
-              {...register("price")}
-              className={`form-control ${errors.price ? "is-invalid" : ""}`}
-            />
-            <div className="invalid-feedback">{errors.price?.message}</div>
           </div>
         </div>
         <div class="row">
