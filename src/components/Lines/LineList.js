@@ -1,120 +1,69 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import CompanyService from "../../services/company.service";
+import lineService from "../../services/line.service";
 
 function LineList(props) {
-  const [companies, setCompanies] = useState([]);
+  const id = 2;
+  const [lines, setLines] = useState([]);
   useEffect(() => {
-    retrieveCompanies();
-    console.log(companies);
-  }, []);
+    getLineList();
+  }, [id]);
 
-  const retrieveCompanies = () => {
-    CompanyService.getLineList()
+  const getLineList = () => {
+    lineService.getCompayLineList(id)
       .then((response) => {
-        //setCategories(response.data);
-        setCompanies(response.data.data.companies);
-        console.log(response.data.data.companies);
+        setLines(response.data.data.lines.lines);
+        console.log(response.data.data.lines);
       })
       .catch((e) => {
         console.log(e);
       });
   };
-
-  const handleAccept = (id) => {
-    const data = new FormData();
-    data.append("disabled", false);
-    CompanyService.accept(id, data)
-      .then((response) => {
-        retrieveCompanies();
-        console.log(response.data.data);
-        console.log(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }
+  
   return (
     <div className="company-list-admin">
-      <Link to={"/company/add"} className="btn btn-primary btn-create">
-        <i class="fas fa-plus"></i>  Create Company
+      <Link to={`/company/cars/line/2`} className="btn btn-primary btn-create">
+        <i class="fas fa-plus"></i>  Tạo Hành Trình
       </Link>
       <table className="table table-bordered table-hover company-table">
         <thead className="table-primary">
           <tr>
             <th>STT</th>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>Image</th>
-            <th>State</th>
-            <th>CreatedDate</th>
-            <th>Car List</th>
+            <th>Bắt Đầu</th>
+            <th>Điểm Đến</th>
+            <th>Giờ Xuất Phát</th>
+            <th>Giờ Đến</th>
+            <th>Bến Bắt Đầu</th>
+            <th>Bến Điểm Đến</th>
+            <th>Các Xe Thuộc Đi Tuyến Này</th>
+            <th>Xem Chi Tiết</th>
             {/* <th>Option</th> */}
           </tr>
         </thead>
         <tbody>
-          {companies &&
-            companies.map((company, index) => (
+          {lines &&
+            (lines || []).map((line, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{company.name}</td>
-                <td>{company.phone}</td>
-                <td>{company.address}</td>
+                <td>{line?.start}</td>
+                <td>{line?.destination}</td>
+                <td>{line?.departure_time}</td>
+                <td>{line?.arrival_time}</td>
+                <td>{line?.station}</td>
+                <td>{line?.station_to}</td>
+                <td>{line?.lines?.plate_number}</td>
                 <td>
-                  <div className="carlist-img"><img src={company.image} alt={company.name} /></div>
-                </td>
-                <td>
-                  {company.disabled ? ( <button className="btn btn-warning" onClick={ ()=> handleAccept(company.id)}>Accept</button> ) : 
-                    (
-                      <button className="btn btn-primary">Confirmed</button>
-                    )
-                  }
-                </td>
-                <td>{formatDate(company.createdAt)}</td>
-                <td>
-                  <Link to={`/companies/view/${company.id}`}>
-                    <button
-                      type="button"
-                      class="btn btn-warning">
-                      View
+                  <Link to={`/companies/view/${line.id}`}>
+                    <button type="button" class="btn btn-warning">
+                      Chi Tiết
+                    </button>
+                  </Link>
+                  <Link to={`/company/cars/line/edit/2`}>
+                    <button type="button" class="btn btn-primary">
+                      Cập Nhật
                     </button>
                   </Link>
                 </td>
-                {/* <td>
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                    Details {index + 1}
-                  </button>
-                  
-                  <Link to={`/companies/cars/${company.id}`}>
-                    <button
-                      type="button"
-                      class="btn btn-success ml-2">
-                      Create
-                    </button>
-                  </Link>
-                  <Link to={`/companies/${company.id}`}>
-                    <button
-                      type="button"
-                      class="btn btn-primary ml-2">
-                      Edit
-                    </button>
-                  </Link>
-                  <button
-                    type="button"
-                    class="btn btn-danger ml-2"
-                    onClick={() => {
-                      const confirmBox = window.confirm(
-                        "Do you really want to delete this Category?"
-                      );
-                      if (confirmBox === true) {
-                        alert("okkk");
-                      }
-                    }}
-                  >
-                    Delete
-                  </button>
-                </td> */}
               </tr>
             ))}
         </tbody>

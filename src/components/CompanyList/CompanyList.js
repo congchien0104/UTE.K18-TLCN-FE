@@ -20,83 +20,47 @@ function CompanyList(props) {
         console.log(e);
       });
   };
-
-  const handleAccept = (id) => {
-    const data = new FormData();
-    data.append("disabled", false);
-    CompanyService.accept(id, data)
-      .then((response) => {
-        retrieveCompanies();
-        console.log(response.data.data);
-        console.log(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }
   return (
-    <div className="company-list-admin">
-      <Link to={"/company/add"} className="btn btn-primary btn-create">
-        <i class="fas fa-plus"></i>  Create Company
-      </Link>
-      <table className="table table-bordered table-hover company-table">
-        <thead className="table-primary">
+    <div>
+      {/* <Link to={"/company/add"} className="nav-link">
+        Create Company
+      </Link> */}
+      <table className="table mt-5">
+        <thead className="thead-dark">
           <tr>
-            <th>STT</th>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>Image</th>
-            <th>State</th>
-            <th>CreatedDate</th>
-            <th>Car List</th>
-            {/* <th>Option</th> */}
+            <th scope="col">STT</th>
+            <th scope="col">Name</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Address</th>
+            <th scope="col">CreatedDate</th>
+            <th scope="col">Car List</th>
+            <th scope="col">Option</th>
           </tr>
         </thead>
         <tbody>
           {companies &&
             companies.map((company, index) => (
               <tr key={index}>
-                <td>{index + 1}</td>
+                <th scope="row">{index + 1}</th>
                 <td>{company.name}</td>
                 <td>{company.phone}</td>
                 <td>{company.address}</td>
-                <td>
-                  <div className="carlist-img"><img src={company.image} alt={company.name} /></div>
-                </td>
-                <td>
-                  {company.disabled ? ( <button className="btn btn-warning" onClick={ ()=> handleAccept(company.id)}>Accept</button> ) : 
-                    (
-                      <button className="btn btn-primary">Confirmed</button>
-                    )
-                  }
-                </td>
-                <td>{formatDate(company.createdAt)}</td>
+                <td>{company.createdAt}</td>
                 <td>
                   <Link to={`/companies/view/${company.id}`}>
-                    <button
-                      type="button"
-                      class="btn btn-warning">
+                    <button type="button" class="btn btn-warning">
                       View
                     </button>
                   </Link>
                 </td>
-                {/* <td>
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                    Details {index + 1}
-                  </button>
-                  
-                  <Link to={`/companies/cars/${company.id}`}>
-                    <button
-                      type="button"
-                      class="btn btn-success ml-2">
+                <td>
+                  <Link to={`/company/cars/${company.id}`}>
+                    <button type="button" class="btn btn-success">
                       Create
                     </button>
                   </Link>
-                  <Link to={`/companies/${company.id}`}>
-                    <button
-                      type="button"
-                      class="btn btn-primary ml-2">
+                  {/* <Link to={`/companies/${company.id}`}>
+                    <button type="button" class="btn btn-primary">
                       Edit
                     </button>
                   </Link>
@@ -113,8 +77,8 @@ function CompanyList(props) {
                     }}
                   >
                     Delete
-                  </button>
-                </td> */}
+                  </button> */}
+                </td>
               </tr>
             ))}
         </tbody>
@@ -122,17 +86,5 @@ function CompanyList(props) {
     </div>
   );
 }
-
-const formatDate = (date) => {
-  var d = new Date(date),
-    month = "" + (d.getMonth() + 1),
-    day = "" + d.getDate(),
-    year = d.getFullYear();
-
-  if (month.length < 2) month = "0" + month;
-  if (day.length < 2) day = "0" + day;
-
-  return [day, month, year].join("/");
-};
 
 export default CompanyList;

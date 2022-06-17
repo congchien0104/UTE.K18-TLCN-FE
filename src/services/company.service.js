@@ -22,6 +22,12 @@ const getCompany = () => {
   });
 };
 
+const getCompanyCarList = (id) => {
+  return axios.get(API_URL + `companies/${id}`, {
+    headers: authHeader(),
+  });
+};
+
 const accept = (id, data) => {
   console.log(id);
   console.log(data);
@@ -34,5 +40,6 @@ export default {
   getCompanyList,
   createCar,
   getCompany,
-  accept
+  accept,
+  getCompanyCarList,
 };

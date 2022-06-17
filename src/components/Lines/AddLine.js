@@ -91,6 +91,7 @@ function AddLine() {
     .then((response) => {
       reset();
       SuccessNotify("Tạo Tuyến Thành Công");
+      history.push(`/temp`);
     })
     .catch((e) => {
         console.log(e);
@@ -98,7 +99,7 @@ function AddLine() {
   }
   return (
     <div className="container mt-5">
-      <h2>Tạo Tuyến Xe</h2>
+      <h2>Tạo Thông Tin Tuyến Xe</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div class="row">
           <div class="col">
@@ -114,7 +115,7 @@ function AddLine() {
         </div>
         <div class="row mt-2">
           <div class="col">
-            <label for="destination">Kết Thúc</label>
+            <label for="destination">Điểm Đến</label>
             <input
               name="destination"
               type="text"
@@ -216,7 +217,7 @@ function AddLine() {
             </div>
         </div>
         <button type="submit" className="btn btn-primary mt-2">
-          Tạo
+          Tạo Hành Trình
         </button>
       </form>
     </div>

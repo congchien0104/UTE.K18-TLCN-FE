@@ -37,7 +37,6 @@ function AddCar() {
 
 
   function onSubmit(data) {
-    console.log("dkm", data);
     const storageRef = ref(storage, 'cars/' + file.name);
         const uploadTask = uploadBytesResumable(storageRef, file);
         uploadTask.on(

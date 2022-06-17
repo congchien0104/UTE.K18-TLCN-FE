@@ -10,7 +10,7 @@ const create = (id, data) => {
 };
 
 const getLine = (id) => {
-  return axios.get(API_URL + `lines/${id}?status=false`, {
+  return axios.get(API_URL + `lines/${id}`, {
     headers: authHeader(),
   });
 };
@@ -27,11 +27,25 @@ const update = (id, data) => {
   });
 };
 
+const getCompayLineList = (id) => {
+  return axios.get(API_URL + `lines/${id}/companies`, {
+    headers: authHeader(),
+  });
+}
+
+const getJourneyLineList = (id) => {
+  return axios.get(API_URL + `lines/${id}/journeys`, {
+    headers: authHeader(),
+  });
+}
+
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   create,
   getLine,
   getLine2,
-  update
+  update,
+  getCompayLineList,
+  getJourneyLineList,
 };

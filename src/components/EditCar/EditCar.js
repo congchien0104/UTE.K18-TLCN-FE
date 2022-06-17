@@ -43,20 +43,17 @@ function EditCar() {
   let history = useHistory();
 
   const [file, setFile] = useState();
-    //const [fileName, setFileName] = useState();
 
   const handleImageChange = (e) => {
     console.log(e.target.files[0]);
     setFile(e.target.files[0]);
-    //setFileName(e.target.files[0].name);
   };
 
   const getCar = (id) => {
     CarService.getCar(id)
       .then((response) => {
         console.log(response.data.data.car);
-        const fields = ["name", "plate_number", "capacity"];
-        //response.data['gender'] = "M";
+        const fields = ["name", "type", "plate_number", "capacity"];
         fields.forEach((field) => {
           setValue(field, response.data.data.car[field]);
         });
@@ -70,8 +67,8 @@ function EditCar() {
     getCar(id);
   }, [id]);
 
-  function onSubmit(data) {
-
+  const onSubmit = (data) => {
+    console.log('dkm', data);
     const storageRef = ref(storage, 'cars/' + file.name);
     const uploadTask = uploadBytesResumable(storageRef, file);
     uploadTask.on(
@@ -91,7 +88,7 @@ function EditCar() {
                     .then((response) => {
                       console.log(response.data);
                       alert(response.data.data);
-                      history.push("/cars");
+                      history.push("/companies");
                     })
                     .catch((error) => {
                       console.log(error);
@@ -100,15 +97,6 @@ function EditCar() {
             );
         }
     );
-    // display form data on success
-    // CarService.update(id, data)
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     history.push("/cars");
-    //   })
-    //   .catch((e) => {
-    //     console.log(e);
-    //   });
   }
   return (
     <div className="container mt-5">
@@ -124,6 +112,18 @@ function EditCar() {
               className={`form-control ${errors.name ? "is-invalid" : ""}`}
             />
             <div className="invalid-feedback">{errors.name?.message}</div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col">
+            <label for="station">Loại xe</label>
+            <input
+              name="type"
+              type="text"
+              {...register("type")}
+              className={`form-control ${errors.type ? "is-invalid" : ""}`}
+            />
+            <div className="invalid-feedback">{errors.type?.message}</div>
           </div>
         </div>
         <div class="row">

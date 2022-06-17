@@ -27,6 +27,8 @@ import EditLine from "./components/Lines/EditLine";
 import EditLine2 from "./components/Lines/EditLine2";
 import AddJourney from "./components/Journeys/AddJourney";
 import Statistical from "./components/Statistical/Statistical";
+import CompanyCarList from "./components/CompanyList/CompanyCarList";
+import LineList from "./components/Lines/LineList";
 
 function App() {
   return (
@@ -101,7 +103,7 @@ function App() {
             <Route
               exact
               path="/companies/view/:id"
-              component={() => <ViewCar />}
+              component={() => <CompanyCarList />}
             />
             <Route
               exact
@@ -111,6 +113,8 @@ function App() {
             <Route exact path="/feedbacks" component={() => <Feedbacks />} />
             <Route exact path="/login" component={() => <Login />} />
             <Route path="/temp" component={() => <AddJourney />} />
+            <Route path="/line-list" component={() => <LineList />} />
+
             <Route path="*" component={() => <div>404 Not Found!</div>} />
           </Switch>
         </div>

@@ -50,7 +50,7 @@ function EditLine() {
   const formOptions = { resolver: yupResolver(validationSchema) };
 
   // get functions to build form with useForm() hook
-  const { register, handleSubmit, reset, formState, setValue } = useForm(formOptions);
+  const { register, handleSubmit, formState, setValue } = useForm(formOptions);
   const { errors } = formState;
   const { id } = useParams();
   let history = useHistory();
@@ -60,14 +60,14 @@ function EditLine() {
     lineService.getLine(id)
       .then((response) => {
         console.log(response.data);
-        const fields = ["start", "destination", "departure_time", "arrival_time", "innitiated_date", "weekdays", "start_route_trip", "des_route_trip"];
+        const fields = ["start", "destination", "departure_time", "arrival_time", "innitiated_date", "weekdays", "price", "station", "station_to"];
         fields.forEach((field) => {
             if(field === "innitiated_date"){
-                const temp = formatDate(response.data.data.lines[field]);
-                console.log(temp);
+                const temp = formatDate(response.data.data.line[field]);
+                console.log("ok", temp);
                 setValue(field, temp);
             }else{
-                setValue(field, response.data.data.lines[field]);
+                setValue(field, response.data.data.line[field]);
             }
         });
       })
@@ -91,7 +91,7 @@ function EditLine() {
   console.log(dayOfWeek);
 
   function onSubmit(data) {
-    var temp = {
+    var dataToSave = {
         start: data.start,
         destination: data.destination,
         departure_time: data.departure_time,
@@ -99,10 +99,11 @@ function EditLine() {
         innitiated_date: data.innitiated_date,
         weekdays: dayOfWeek,
         status_trip: false,
-        start_route_trip: data.start_route_trip,
-        des_route_trip: data.des_route_trip
+        price: data.price,
+        station: data.station,
+        station_to: data.station_to,
     }
-    lineService.update(id, temp)
+    lineService.update(id, dataToSave)
     .then((response) => {
       SuccessNotify("Chỉnh Sửa Tuyến Thành Công");
     })
@@ -112,7 +113,7 @@ function EditLine() {
   }
   return (
     <div className="container mt-5">
-      <h2>Tạo Tuyến Xe</h2>
+      <h2>Cập Nhật Thông Tin Tuyến Xe</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div class="row">
           <div class="col">
@@ -136,6 +137,42 @@ function EditLine() {
               className={`form-control ${errors.destination ? "is-invalid" : ""}`}
             />
             <div className="invalid-feedback">{errors.destination?.message}</div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col">
+            <label for="station">Bến xe</label>
+            <input
+              name="station"
+              type="text"
+              {...register("station")}
+              className={`form-control ${errors.station ? "is-invalid" : ""}`}
+            />
+            <div className="invalid-feedback">{errors.station?.message}</div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col">
+            <label for="station_to">Bến Đến</label>
+            <input
+              name="station_to"
+              type="text"
+              {...register("station_to")}
+              className={`form-control ${errors.station_to ? "is-invalid" : ""}`}
+            />
+            <div className="invalid-feedback">{errors.station_to?.message}</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label for="number-palte">Giá</label>
+            <input
+              name="price"
+              type="number"
+              {...register("price")}
+              className={`form-control ${errors.price ? "is-invalid" : ""}`}
+            />
+            <div className="invalid-feedback">{errors.price?.message}</div>
           </div>
         </div>
         <div class="row mt-2">
@@ -191,30 +228,6 @@ function EditLine() {
                         ))
                     }
                 </ul>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <label for="start_route_trip">Bắt Đầu (Khứ Hồi)</label>
-                <input
-                name="start_route_trip"
-                type="time"
-                {...register("start_route_trip")}
-                className={`form-control ${errors.start_route_trip ? "is-invalid" : ""}`}
-                />
-                <div className="invalid-feedback">{errors.start_route_trip?.message}</div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <label for="des_route_trip">Kết Thúc (Khứ Hồi</label>
-                <input
-                name="des_route_trip"
-                type="time"
-                {...register("des_route_trip")}
-                className={`form-control ${errors.des_route_trip ? "is-invalid" : ""}`}
-                />
-                <div className="invalid-feedback">{errors.des_route_trip?.message}</div>
             </div>
         </div>
         <button type="submit" className="btn btn-primary mt-2">
