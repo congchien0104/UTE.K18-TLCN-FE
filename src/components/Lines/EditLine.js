@@ -106,6 +106,7 @@ function EditLine() {
     lineService.update(id, dataToSave)
     .then((response) => {
       SuccessNotify("Chỉnh Sửa Tuyến Thành Công");
+      history.push(`/lines/journeys/edit/${id}`)
     })
     .catch((e) => {
         console.log(e);

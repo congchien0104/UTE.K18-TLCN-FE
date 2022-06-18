@@ -80,25 +80,31 @@ function SideBar(props) {
                 to="/company/statistical"
                 className="list-group-item list-group-item-action"
               >
-                Thông Kê
+                Trang Chủ
+              </Link>
+              <Link
+                to="/company/lines"
+                className="list-group-item list-group-item-action"
+              >
+                Quản Lý Hành Trình
               </Link>
               <Link
                 to="/company/cars"
                 className="list-group-item list-group-item-action"
               >
-                Manage Cars
+                Quản Lý Các Xe
               </Link>
               <Link
                 to="/company/reservations"
                 className="list-group-item list-group-item-action"
               >
-                Manage Reservations
+                Quản Lý Đặt Vé
               </Link>
               <Link
                 to="/company/feedbacks"
                 className="list-group-item list-group-item-action"
               >
-                Manage Feedbacks
+                Quản Lý Phản Hồi
               </Link>
             </ul>
           )

@@ -88,10 +88,10 @@ function AddLine() {
         price: data.price
     }
     lineService.create(id, temp)
-    .then((response) => {
+    .then((res) => {
       reset();
       SuccessNotify("Tạo Tuyến Thành Công");
-      history.push(`/temp`);
+      history.push(`/lines/journeys/${res.data.data.line.id}`);
     })
     .catch((e) => {
         console.log(e);

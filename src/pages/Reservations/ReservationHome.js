@@ -33,7 +33,7 @@ function ReservationHome() {
             <div className='row'>
             {
                 cars.length > 0 ? (
-                    cars.map((car, index) => (
+                    (cars || []).map((car, index) => (
                         <div className='col-md-6'>
                             <div className="card" key={index}>
                                 <img className="card-img-top" src={car.image} alt="ok"/>
@@ -46,7 +46,7 @@ function ReservationHome() {
                         </div>
                     ))
                 ) : (
-                    <p>Chưa có nhà xe nào để xem bình luận</p>
+                    <p>Chưa có xe</p>
                 )
             }
             </div>

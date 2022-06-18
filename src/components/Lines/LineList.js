@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import authService from "../../services/auth.service";
 import lineService from "../../services/line.service";
 
 function LineList(props) {
-  const id = 2;
+  const currentUser = authService.getCurrentUser();
+    console.log("user", currentUser.id);
+    const id = currentUser.id;
+  //const id = 2;
   const [lines, setLines] = useState([]);
   useEffect(() => {
     getLineList();
@@ -12,7 +16,7 @@ function LineList(props) {
   const getLineList = () => {
     lineService.getCompayLineList(id)
       .then((response) => {
-        setLines(response.data.data.lines.lines);
+        setLines(response.data.data.lines.company.lines);
         console.log(response.data.data.lines);
       })
       .catch((e) => {
@@ -36,6 +40,7 @@ function LineList(props) {
             <th>Bến Bắt Đầu</th>
             <th>Bến Điểm Đến</th>
             <th>Các Xe Thuộc Đi Tuyến Này</th>
+            <th>Xem Địa Chỉ Đón Nhận</th>
             <th>Xem Chi Tiết</th>
             {/* <th>Option</th> */}
           </tr>
@@ -55,10 +60,17 @@ function LineList(props) {
                 <td>
                   <Link to={`/companies/view/${line.id}`}>
                     <button type="button" class="btn btn-warning">
+                      Xem
+                    </button>
+                  </Link>
+                </td>
+                <td>
+                  <Link to={`/companies/view/${line.id}`}>
+                    <button type="button" class="btn btn-warning">
                       Chi Tiết
                     </button>
                   </Link>
-                  <Link to={`/company/cars/line/edit/2`}>
+                  <Link to={`/company/cars/line/edit/${line.id}`}>
                     <button type="button" class="btn btn-primary">
                       Cập Nhật
                     </button>
