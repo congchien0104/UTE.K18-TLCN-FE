@@ -31,6 +31,8 @@ import CompanyCarList from "./components/CompanyList/CompanyCarList";
 import LineList from "./components/Lines/LineList";
 import EditJourney from "./components/Journeys/EditJourney";
 import ReservationList from "./pages/Reservations/ReservationList";
+import FeedbackList from "./pages/Feedbacks/FeedbackList";
+import CarListCompany from "./pages/CompanyCar/CarListCompany";
 
 function App() {
   return (
@@ -44,7 +46,7 @@ function App() {
           <Switch>
             <Route exact path={["/", "/home"]} component={() => <Home />} />
             <Route exact path="/users" component={() => <Users />} />
-            <Route exact path="/company/cars" component={() => <Cars />} />
+            <Route exact path="/company/cars" component={() => <CarListCompany />} />
             <Route
               exact
               path="/company/cars/:id"
@@ -73,7 +75,7 @@ function App() {
             <Route
               exact
               path="/company/feedbacks"
-              component={() => <FeedbackHome />}
+              component={() => <FeedbackList />}
             />
             <Route
               exact

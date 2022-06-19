@@ -7,9 +7,6 @@ import authService from "../../services/auth.service";
 
 function ReservationList() {
 
-  const currentUser = authService.getCurrentUser();
-  console.log("user", currentUser.id);
-  const id = currentUser.id;
   const [reservations, setReservations] = useState([]);
   const [count, setCount] = useState();
   const [totalPages, setTotalPage] = useState();
@@ -21,14 +18,14 @@ function ReservationList() {
   }
 
   useEffect(() => {
-    getReservation(id);
-  }, [id, currentPage]);
-  const getReservation = (id) => {
+    getReservation(currentPage);
+  }, [currentPage]);
+  const getReservation = (currentPage) => {
     reservationService
-      .getReservationList(id, currentPage)
+      .getReservationList(currentPage)
       .then((response) => {
-        setCount(response.data.data.reservation.count);
-        setReservations(response.data.data.reservation.rows);
+        setCount(response.data.data.reservationList.count);
+        setReservations(response.data.data.reservationList.rows);
         console.log(response.data);
       })
       .catch((e) => {
@@ -36,17 +33,17 @@ function ReservationList() {
       });
   };
 
-  useEffect(() => {
-    reservationService.getSearchReservation(id, currentPage, search)
-    .then((response) => {
-      //setCategories(response.data);
-      setCount(response.data.data.reservation.count);
-      setReservations(response.data.data.reservation.rows);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-  }, [id, search, currentPage]);
+//   useEffect(() => {
+//     reservationService.getSearchReservation(id, currentPage, search)
+//     .then((response) => {
+//       //setCategories(response.data);
+//       setCount(response.data.data.reservation.count);
+//       setReservations(response.data.data.reservation.rows);
+//     })
+//     .catch((e) => {
+//       console.log(e);
+//     });
+//   }, [id, search, currentPage]);
 
   // hanlde search reservation_date
 

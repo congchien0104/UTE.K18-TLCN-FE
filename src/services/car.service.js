@@ -27,11 +27,18 @@ const update = (id, data) => {
   });
 };
 
+const getCarListCompany = () => {
+  return axios.get(API_URL + `cars/company/temp`, {
+    headers: authHeader(),
+  });
+};
+
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getCarList,
   getCar,
   create,
-  update
+  update,
+  getCarListCompany,
 };

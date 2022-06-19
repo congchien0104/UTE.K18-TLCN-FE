@@ -21,8 +21,8 @@ const getTotal = () => {
   });
 }
 
-const getReservationList = (id, page) => {
-  return axios.get(API_URL + `reservations/${id}?page=${page}`, {
+const getReservationList = (page) => {
+  return axios.get(API_URL + `reservations?page=${page}`, {
     headers: authHeader(),
   });
 };
