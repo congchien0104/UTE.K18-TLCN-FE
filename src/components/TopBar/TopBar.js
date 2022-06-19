@@ -5,12 +5,14 @@ import AuthService from "../../services/auth.service";
 
 const TopBar = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [showCompany, setShowCompany] = useState(false);
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
 
     if (user) {
       setCurrentUser(user);
+      setShowCompany(user.roles.includes("ROLE_COMPANY"));
     }
     console.log(user);
   }, []);
@@ -24,7 +26,7 @@ const TopBar = (props) => {
   return (
     <nav className="navbar-admin navbar navbar-dark bg-primary">
       <Link to={"/"} className="navbar-brand" style={{ paddingLeft: "15px" }}>
-        ADMIN
+        { showCompany ? `Xin Chào ${currentUser?.username}`: "ADMIN"}
       </Link>
       {currentUser ? (
         <ul className="navbar-nav navbar-register">

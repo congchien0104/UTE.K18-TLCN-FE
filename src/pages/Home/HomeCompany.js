@@ -2,7 +2,7 @@ import React from "react";
 import Statistical from '../../components/Statistical/Statistical';
 import { CChart } from '@coreui/react-chartjs';
 
-function Home(props) {
+function HomeCompany(props) {
   return (
     <div>
       <h2>Thống Kê</h2>
@@ -11,4 +11,4 @@ function Home(props) {
   );
 }
 
-export default Home;
+export default HomeCompany;

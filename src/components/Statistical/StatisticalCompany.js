@@ -3,7 +3,7 @@ import reservationService from "../../services/reservation.service";
 import { SuccessNotify } from "../../utils/Notify";
 import { CChart } from '@coreui/react-chartjs';
 
-function Statistical() {
+function StatisticalCompany() {
 
     const [total, setTotal] = useState(0);
     const [totalCars, setTotalCars] = useState([]);
@@ -72,4 +72,4 @@ function Statistical() {
   );
 }
 
-export default Statistical;
+export default StatisticalCompany;
