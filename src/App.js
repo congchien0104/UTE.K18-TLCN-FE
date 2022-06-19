@@ -33,6 +33,7 @@ import EditJourney from "./components/Journeys/EditJourney";
 import ReservationList from "./pages/Reservations/ReservationList";
 import FeedbackList from "./pages/Feedbacks/FeedbackList";
 import CarListCompany from "./pages/CompanyCar/CarListCompany";
+import StatisticalCompany from "./components/Statistical/StatisticalCompany";
 
 function App() {
   return (
@@ -90,7 +91,7 @@ function App() {
             <Route
               exact
               path="/company/statistical"
-              component={() => <Statistical />}
+              component={() => <StatisticalCompany />}
             />
             <Route
               exact

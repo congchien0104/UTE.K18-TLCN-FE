@@ -6,29 +6,29 @@ import { CChart } from '@coreui/react-chartjs';
 function StatisticalCompany() {
 
     const [total, setTotal] = useState(0);
-    const [totalCars, setTotalCars] = useState([]);
+    const [totalListCar, setTotalListCar] = useState([]);
   
   const getTotalAmount = () => {
-    reservationService.getTotal()
+    reservationService.getTotalCompanyOfCar()
     .then((res) => {
         console.log(res.data);
-        setTotal(res?.data?.data.total);
-        setTotalCars(res?.data?.data?.totalAmountOfCar);
+        setTotal(res?.data?.data?.total);
+        setTotalListCar(res?.data?.data?.totalListCar);
     })
     .catch((e) => {
         console.log(e);
     });
   }
 
-  const labels = (totalCars.reverse() || []).map(item => item?.cars.plate_number);
-  const data = (totalCars.reverse() || []).map(item => item?.total_amount);
+  const labels = (totalListCar.reverse() || []).map(item => item?.cars.plate_number);
+  const data = (totalListCar.reverse() || []).map(item => item?.total_amount);
 
   useEffect(() => {
     getTotalAmount();
   }, []);
   return (
     <div className="container mt-5">
-      <h2>Tổng doanh thu đạt được trên trang web: {total} VND</h2>
+      <h2>Tổng doanh thu đạt của nhà xe được trên trang web:  { total } VND</h2>
       <CChart
         type="bar"
         data={{
@@ -44,7 +44,7 @@ function StatisticalCompany() {
         labels="months"
       />
       <h3>Thứ hạng bán vé của từng xe:</h3>
-      <div class="tickets-list row" style={{ "height": "44rem", "overflow": "hidden", "overflowY": "scroll" }}>
+      {/* <div class="tickets-list row" style={{ "height": "44rem", "overflow": "hidden", "overflowY": "scroll" }}>
         {
             ( totalCars || []).map((item, index) => (
               <div class="col-6 mt-0 mb-4">
@@ -62,12 +62,12 @@ function StatisticalCompany() {
                     <div>
                       <button className="btn-danger" onClick={ () => handleCancel(item.id)}>Huy</button>
                     </div> */}
-                  </div>
+                  {/* </div>
                 </div>
               </div>
             ))
             }
-        </div>
+        </div> */}
     </div>
   );
 }

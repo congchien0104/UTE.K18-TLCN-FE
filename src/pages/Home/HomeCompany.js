@@ -1,12 +1,11 @@
 import React from "react";
-import Statistical from '../../components/Statistical/Statistical';
-import { CChart } from '@coreui/react-chartjs';
+import StatisticalCompany from "../../components/Statistical/StatisticalCompany";
 
 function HomeCompany(props) {
   return (
     <div>
       <h2>Thống Kê</h2>
-      <Statistical />
+      <StatisticalCompany />
     </div>
   );
 }
