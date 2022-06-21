@@ -50,7 +50,7 @@ const Login = (props) => {
         () => {
           history.push("/home");
           SuccessNotify("Đăng Nhập Thành Công");
-          //window.location.reload();
+          window.location.reload();
         },
         (error) => {
           const resMessage =

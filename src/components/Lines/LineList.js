@@ -92,6 +92,36 @@ function LineList(props) {
                     </div>
                   </div>
                 </div>
+                <div class="modal fade" id={`m2${index}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header justify-content-center">
+                        <h4 className="modal-title text-center" id="exampleModalLabel">gan xe</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div>
+                          <label htmlFor="car1">
+                            <input type="checkbox" className="btn btn-primary" id="car1"/> Xe 1
+                          </label>
+                        </div>
+                        <div>
+                          <label htmlFor="car2">
+                            <input type="checkbox" className="btn btn-primary" id="car2"/> Xe 2
+                          </label>
+                        </div>
+                        <div>
+                          <label htmlFor="car3">
+                            <input type="checkbox" className="btn btn-primary" id="car3"/> Xe 3
+                          </label>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Xac nhan</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 
                 <tr key={index}>
                   <td>{index + 1}</td>
@@ -103,7 +133,7 @@ function LineList(props) {
                   <td>{line?.station_to}</td>
                   <td>{line?.lines?.plate_number}</td>
                   <td>
-                      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target={`#m${index}`}>
+                      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target={`#m2${index}`}>
                         Chọn
                       </button>
                   </td>

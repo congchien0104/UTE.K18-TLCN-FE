@@ -18,11 +18,11 @@ function ReservationList() {
   }
 
   useEffect(() => {
-    getReservation(currentPage);
-  }, [currentPage]);
+    getReservation(currentPage, search);
+  }, [currentPage, search]);
   const getReservation = (currentPage) => {
     reservationService
-      .getReservationList(currentPage)
+      .getReservationList(currentPage, search)
       .then((response) => {
         setCount(response.data.data.reservationList.count);
         setReservations(response.data.data.reservationList.rows);
