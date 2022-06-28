@@ -67,8 +67,8 @@ function EditCar() {
     getCar(id);
   }, [id]);
 
-  const onSubmit = (data) => {
-    console.log('dkm', data);
+  function onSubmit (data) {
+    console.log('temp', data);
     const storageRef = ref(storage, 'cars/' + file.name);
     const uploadTask = uploadBytesResumable(storageRef, file);
     uploadTask.on(
@@ -167,7 +167,7 @@ function EditCar() {
           </div>
         </div>
         <button type="submit" className="btn btn-primary mt-2">
-          Cập Nhật
+          Tạo
         </button>
       </form>
     </div>

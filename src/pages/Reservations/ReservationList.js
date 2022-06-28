@@ -55,6 +55,9 @@ function ReservationList() {
             <input name="search" onChange={(e)=> setSearch(e.target.value)} class="form-control col-md-3 mr-2" type="search" placeholder="Tìm kiếm" aria-label="Search" />
           </form>
         </div>
+        {/* <Link to={`ticketbooking/${car.id}?date=${date}`}>
+                                <button className="btn btn-primary fw-bolder">Đặt ngay</button>
+                              </Link> */}
         <p>Số lượng vé đã bán: {reservations.length}</p>
         <table className="table table-bordered table-hover car-table mt-5">
           <thead className="table-primary">

@@ -39,6 +39,12 @@ const getTotalCompanyOfCar = () => {
   });
 }
 
+const getPosition = (id, date) => {
+  return axios.get(API_URL + `reservations/test/${id}?date=${date}`, {
+    headers: authHeader(),
+  });
+};
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getReservations,
@@ -47,4 +53,5 @@ export default {
   getReservationList,
   getSearchReservation,
   getTotalCompanyOfCar,
+  getPosition
 };

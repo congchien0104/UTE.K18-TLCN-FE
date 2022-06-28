@@ -68,7 +68,7 @@ function AddCar() {
   }
   return (
     <div className="container mt-5">
-      <h2>Tạo Nhà Xe</h2>
+      <h2>Tạo Xe</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div class="row">
           <div class="col">

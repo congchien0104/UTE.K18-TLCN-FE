@@ -1,0 +1,66 @@
+.seat-placement {
+  position: relative;
+  padding: 2rem;
+  z-index: 0;
+}
+
+.seat-placement::after,
+.seat-placement::before {
+  z-index: -1;
+  position: absolute;
+  top: -5px;
+  bottom: 0;
+  width: 40%;
+  display: block;
+  background-color: transparent;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+.seat-placement::after {
+  content: 'Tầng 1';
+  left: 7%;
+}
+
+.seat-placement::before {
+  content: 'Tầng 2';
+  right: 7%;
+}
+
+.seat-img {
+  border-radius: 3px;
+  padding: 3px;
+}
+
+.seat-img:hover {
+  cursor: pointer;
+  opacity: .6;
+  transition: all .26s ease;
+}
+
+.seat-checkbox:checked~.seat-img {
+  background: #34c558;
+  border: 1px solid #656565;
+}
+
+.seat-checkbox:disabled~.seat-img {
+  background: #aaa;
+  opacity: 1;
+  cursor: unset;
+}
+
+.guide-seat {
+  position: relative;
+  z-index: 0;
+}
+
+.guide-seat::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background-color: transparent;
+}

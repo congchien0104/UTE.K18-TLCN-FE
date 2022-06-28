@@ -43,7 +43,7 @@ function CompanyCarList(props) {
                       <h2 className="car-name">{car?.plate_number}</h2>
                       <p1>Loại Xe: {car?.type}</p1><br/>
                       <p1>Số Chỗ: {car?.capacity}</p1><br/>
-                      <p1>Tên XE: {car?.name}</p1><br/>
+                      <p1>Tên Xe: {car?.name}</p1><br/>
                     </div>
                   </div>
                   <div className="card-footer pb-4 border-top-0 bg-transparent">

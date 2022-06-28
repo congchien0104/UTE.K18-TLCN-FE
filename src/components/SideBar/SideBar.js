@@ -104,7 +104,7 @@ function SideBar(props) {
                 to="/company/feedbacks"
                 className="list-group-item list-group-item-action"
               >
-                Quản Lý Phản Hồi
+                Xem Phản Hồi
               </Link>
             </ul>
           )
