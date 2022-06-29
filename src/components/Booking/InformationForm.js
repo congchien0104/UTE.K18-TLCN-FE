@@ -32,9 +32,8 @@ export default function InformationForm({
   const [typePayment, setTypePayment] = React.useState();
 
   const handleSubmit = async (data) => {
-    console.log(data);
-    data.typePayment = typePayment;
     try {
+      console.log('1');
       await onSubmit(data);
     } catch (error) {
       console.log(error);
@@ -134,30 +133,6 @@ export default function InformationForm({
             value={formik.values.note}
             onChange={formik.handleChange}
           />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControl>
-            <FormLabel id="demo-radio-buttons-group-label">Hình thức thanh toán</FormLabel>
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="1"
-              name="radio-buttons-group"
-              onChange={handlePaymentType}
-            >
-              <FormControlLabel value="0" control={<Radio />} label="Sử dụng Paypal để thanh toán" />
-              <FormControlLabel value="1" control={<Radio />} label="Thanh toán trực tiếp khi lên xe" />
-            </RadioGroup>
-          </FormControl>
-          {/* <FormControlLabel
-            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-            label="Sử dụng Paypal để thanh toán"
-            sx={{ display: 'block' }}
-          />
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-            label="Thanh toán trực tiếp tới nhà xe"
-            sx={{ display: 'block' }}
-          /> */}
         </Grid>
         <Grid item xs={12}>
           <Button variant="contained"

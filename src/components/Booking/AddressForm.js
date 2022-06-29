@@ -83,7 +83,7 @@ export default function AddressForm({ journeys, total, handleAddress }) {
         </div> */}
         <Grid container sx={{ mt: 3 }}>
           <Grid item xs={12} sm={6}>
-            Tổng tiền: {total}
+            <strong className='text-primary fs-4 fw-bold'>Tổng tiền: {moneyFormatter(total)}</strong>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Button variant="contained"
@@ -100,3 +100,12 @@ export default function AddressForm({ journeys, total, handleAddress }) {
     </React.Fragment>
   );
 }
+
+const moneyFormatter = (money) => {
+  if (!money) money = 0;
+  const result = new Intl.NumberFormat("it-IT", {
+    style: "currency",
+    currency: "VND",
+  }).format(money);
+  return result;
+};

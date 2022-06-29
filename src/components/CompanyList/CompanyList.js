@@ -4,6 +4,7 @@ import CompanyService from "../../services/company.service";
 
 function CompanyList(props) {
   const [companies, setCompanies] = useState([]);
+  const [listConfirm, setListConfirm] = useState([]);
   useEffect(() => {
     retrieveCompanies();
     console.log(companies);
@@ -14,6 +15,7 @@ function CompanyList(props) {
       .then((response) => {
         //setCategories(response.data);
         setCompanies(response.data.data.companies);
+        setListConfirm(response.data.data.listConfirm);
         console.log(response.data.data.companies);
       })
       .catch((e) => {
@@ -22,9 +24,9 @@ function CompanyList(props) {
   };
   return (
     <div>
-      {/* <Link to={"/company/add"} className="nav-link">
-        Create Company
-      </Link> */}
+      <Link to={"/companies/confirm"} className="btn btn-warning">
+        Chờ Xét Duyệt ( { listConfirm.length } )
+      </Link>
       <table className="table mt-5">
         <thead className="thead-dark">
           <tr>
@@ -45,18 +47,18 @@ function CompanyList(props) {
                 <td>{company.name}</td>
                 <td>0{company.phone}</td>
                 <td>{company.address}</td>
-                <td>{company.createdAt}</td>
+                <td>{formatDate(company.createdAt)}</td>
                 <td>
                   <Link to={`/companies/view/${company.id}`}>
-                    <button type="button" class="btn btn-warning">
-                      View
+                    <button type="button" class="btn btn-primary">
+                      Xem Xe
                     </button>
                   </Link>
                 </td>
                 <td>
                   <Link to={`/company/cars/${company.id}`}>
                     <button type="button" class="btn btn-success">
-                      Create
+                      Tạo Xe
                     </button>
                   </Link>
                   {/* <Link to={`/companies/${company.id}`}>
@@ -86,5 +88,17 @@ function CompanyList(props) {
     </div>
   );
 }
+
+const formatDate = (date) => {
+  var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [day, month, year].join("-");
+};
 
 export default CompanyList;

@@ -58,8 +58,8 @@ function ReservationList() {
         {/* <Link to={`ticketbooking/${car.id}?date=${date}`}>
                                 <button className="btn btn-primary fw-bolder">Đặt ngay</button>
                               </Link> */}
-        <p>Số lượng vé đã bán: {reservations.length}</p>
-        <table className="table table-bordered table-hover car-table mt-5">
+        {/* <p>Số lượng vé đã bán: {reservations.length}</p> */}
+        <table className="table table-bordered table-hover car-table mt-5" style={{"height":"auto"}}>
           <thead className="table-primary">
             <tr>
               <th scope="col">STT</th>
@@ -68,13 +68,11 @@ function ReservationList() {
               <th scope="col">Ngày Đặt</th>
               <th scope="col">Số Lượng</th>
               <th scope="col">Vị Trí</th>
-              <th scope="col">Bắt Đầu</th>
-              <th scope="col">Kết Thúc</th>
-              <th scope="col">Nơi Đón</th>
-              <th scope="col">Nơi Trả</th>
+              <th scope="col">Mốc thời gian</th>
+              <th scope="col">Nơi Đón Trả</th>
               <th scope="col">Tên Xe</th>
               <th scope="col">Biển Số</th>
-              <th scope="col">Số Tiền Đã Trả</th>
+              <th scope="col">Số Tiền</th>
             </tr>
           </thead>
           <tbody>
@@ -87,13 +85,11 @@ function ReservationList() {
                   <td>{formatDate(item.reservation_date)}</td>
                   <td>{item.quantity}</td>
                   <td>{item.position}</td>
-                  <td>{item.cars.lines[0].start}</td>
-                  <td>{item.cars.lines[0].destination}</td>
-                  <td>{item.pickup_place}</td>
-                  <td>{item.dropoff_place}</td>
+                  <td>{item.cars.lines[0].start} - {item.cars.lines[0].destination}</td>
+                  <td>{item.pickup_place} - {item.dropoff_place}</td>
                   <td>{item.cars.name}</td>
                   <td>{item.cars.plate_number}</td>
-                  <td>{item.paid_amount}</td>
+                  <td>{moneyFormatter(item.paid_amount)}</td>
                 </tr>
               ))}
           </tbody>
@@ -118,6 +114,15 @@ const formatDate = (date) => {
   if (day.length < 2) day = "0" + day;
 
   return [year, month, day].join("-");
+};
+
+const moneyFormatter = (money) => {
+  if (!money) money = 0;
+  const result = new Intl.NumberFormat('it-IT', {
+      style: 'currency',
+      currency: 'VND',
+  }).format(money);
+  return result;
 };
 
 export default ReservationList;

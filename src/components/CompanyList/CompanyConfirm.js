@@ -46,14 +46,8 @@ function CompanyConfirm(props) {
             { (companies || []).map((item, index) => (
               <div key={index} className="col-lg-3 col-md-4 mb-5">
                 <div className="card">
-                  <div className="carlist-img">
-                    <img
-                      className="card-img-top"
-                      src={item.image}
-                      alt={item.name}
-                    />
-                  </div>
                   <div className="card-body">
+                    <img src={item.image} alt={item.name} width="100%"/>
                     <div className="text-center">
                       <h2 className="car-name">{item.name}</h2>
                       <p1>Số điện thoại: 0{item?.phone}</p1><br/>
@@ -62,9 +56,12 @@ function CompanyConfirm(props) {
                     </div>
                   </div>
                   <div className="card-footer pb-4 border-top-0 bg-transparent">
-                    <div className="text-center">
+                    <div className="d-flex align-items-center justify-content-between">
                         <button type="button" class="btn btn-success" onClick={() => handleConfirm(item.id)}>
                          Xác Nhận
+                        </button>
+                        <button type="button" class="btn btn-outline-danger" onClick={() => handleConfirm(item.id)}>
+                         Hủy
                         </button>
                     </div>
                   </div>

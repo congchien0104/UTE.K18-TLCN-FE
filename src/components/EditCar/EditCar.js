@@ -9,6 +9,7 @@ import CarService from "../../services/car.service";
 
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import storage from "../../firebase";
+import { SuccessNotify } from "../../utils/Notify";
 
 function EditCar() {
   // form validation rules
@@ -16,22 +17,12 @@ function EditCar() {
     name: Yup.string()
       .min(6, "Name must be at least 6 characters")
       .required("Name is required"),
-    station: Yup.string()
-      .min(6, "Name must be at least 6 characters")
-      .required("Station is required"),
-    price: Yup.string().required("Last name is required"),
+    type: Yup.string()
+      .min(6, "Type must be at least 6 characters"),
     capacity: Yup.string().required("Capcity is required"),
-    start: Yup.string()
-      .min(6, "Start must be at least 6 characters")
-      .required("Start is required"),
-    destination: Yup.string()
-      .min(6, "Destination must be at least 6 characters")
-      .required("Password is required"),
     plate_number: Yup.string()
       .min(6, "Destination must be at least 6 characters")
       .required("Password is required"),
-    departure: Yup.string().required("Departure is required"),
-    arrival: Yup.string().required("Arrival is required"),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -86,9 +77,8 @@ function EditCar() {
                     console.log(data);
                     CarService.update(id, data)
                     .then((response) => {
-                      console.log(response.data);
-                      alert(response.data.data);
-                      history.push("/companies");
+                      SuccessNotify("Cập nhật xe thành công");
+                      history.goBack();
                     })
                     .catch((error) => {
                       console.log(error);
@@ -100,7 +90,7 @@ function EditCar() {
   }
   return (
     <div className="container mt-5">
-      <h2>Cập Nhật Nhà Xe</h2>
+      <h2>Cập Nhật Xe</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div class="row">
           <div class="col">
@@ -167,7 +157,7 @@ function EditCar() {
           </div>
         </div>
         <button type="submit" className="btn btn-primary mt-2">
-          Tạo
+          Lưu
         </button>
       </form>
     </div>

@@ -1,46 +1,41 @@
-import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
-import Paper from '@mui/material/Paper';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Seats from './Seats';
-import AddressForm from './AddressForm';
-import InformationForm from './InformationForm';
-import { useParams } from 'react-router-dom';
-import carService from '../../services/car.service';
-import reservationService from '../../services/reservation.service';
+import * as React from "react";
+import CssBaseline from "@mui/material/CssBaseline";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Toolbar from "@mui/material/Toolbar";
+import Paper from "@mui/material/Paper";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Button from "@mui/material/Button";
+import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Seats from "./Seats";
+import AddressForm from "./AddressForm";
+import InformationForm from "./InformationForm";
+import { useHistory, useParams } from "react-router-dom";
+import carService from "../../services/car.service";
+import reservationService from "../../services/reservation.service";
+import { SuccessNotify } from "../../utils/Notify";
 
-const steps = ['Chỗ mong muốn', 'Điểm đón trả', 'Nhập thông tin'];
-
-
+const steps = ["Chỗ mong muốn", "Điểm đón trả", "Nhập thông tin"];
 
 const theme = createTheme();
 
 export default function Booking() {
-
-  // My code 
+  // My code
   const { id } = useParams();
-  const queryString = window.location.search;
-
-  const urlParams = new URLSearchParams(queryString);
-  const date = urlParams.get("date");
-  console.log(date);
+  const history = useHistory();
+  const [date, setDate] = React.useState(formatDate(new Date()));
 
   const initialValues = {
-    fullname: '',
-    phone: '+84',
-    email: '',
-    cccd: '',
-    note: '',
+    fullname: "",
+    phone: "+84",
+    email: "",
+    cccd: "",
+    note: "",
   };
   const [car, setCar] = React.useState();
   const [journeys, setJourneys] = React.useState([]);
@@ -66,7 +61,8 @@ export default function Booking() {
   };
 
   const getTicket = (id) => {
-    reservationService.getPosition(id, date)
+    reservationService
+      .getPosition(id, date)
       .then((response) => {
         setPositions(response.data.data.reservation);
       })
@@ -80,13 +76,9 @@ export default function Booking() {
   React.useEffect(() => {
     getCar(id);
     getTicket(id);
-  }, [id]);
+  }, [id, date]);
 
   console.log("ghe da dat", positions);
-
-
-
-
 
   // My phase 1
   const handleSubmitSeat = (data) => {
@@ -94,7 +86,7 @@ export default function Booking() {
     setTotal(data?.amount);
     setTickets(data?.choose);
     setStep(1);
-  }
+  };
 
   // My phase 2
 
@@ -103,7 +95,7 @@ export default function Booking() {
     setPickup(data?.start);
     setDropoff(data?.destination);
     setStep(2);
-  }
+  };
 
   // My phase 3
 
@@ -111,12 +103,12 @@ export default function Booking() {
     console.log("submit main", values);
     const dataToSave = [];
 
-    for(let i = 0; i < tickets.length; i++) {
+    for (let i = 0; i < tickets.length; i++) {
       var data = {
         amount: total,
         carId: car.id,
         quantity: 1,
-        reservation_date: new Date(date),  // change reservation_date
+        reservation_date: new Date(date), // change reservation_date
         fullname: values.fullname,
         phone: values.phone,
         email: values.email,
@@ -124,17 +116,16 @@ export default function Booking() {
         pickup_place: pickup || "Eahleo",
         dropoff_place: dropoff || "Thu Duc",
         position: tickets[i],
-        status: 'active',
-      }
+        status: "active",
+      };
       dataToSave.push(data);
     }
-
 
     var data = {
       amount: total,
       carId: car.id,
       quantity: tickets?.length || 1,
-      reservations_date: new Date(date),  // change reservation_date
+      reservations_date: new Date(date), // change reservation_date
       fullname: values.fullname,
       phone: values.phone,
       email: values.email,
@@ -142,42 +133,21 @@ export default function Booking() {
       pickup_place: pickup || "Eahleo",
       dropoff_place: dropoff || "Thu Duc",
       arr: tickets,
-      status: 'active',
-    }
-    if(values.typePayment === '0') {
-      reservationService.paypal(data)
-      .then((response) => {
-        console.log(response.data);
-        window.location.href = response.data.data;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-    } else {
-      console.log("thanh toan sau ");
-      reservationService.createReservation(id, dataToSave)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-    }
-    
-
-    setStep(5);
-  }
-
-
-
-
-
-
+      status: "active",
+    };
+    reservationService
+        .createReservation(id, dataToSave)
+        .then((response) => {
+          SuccessNotify('Đặt vé thành công');
+          history.goBack();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    //setStep(5);
+  };
 
   // end
-
-
-
 
   const [step, setStep] = React.useState(0);
 
@@ -208,11 +178,7 @@ export default function Booking() {
     switch (step) {
       case 0:
         return (
-          <Seats
-            car={car}
-            positions={positions}
-            onSubmit={handleSubmitSeat}
-          />
+          <Seats car={car} positions={positions} onSubmit={handleSubmitSeat} />
         );
       case 1:
         return (
@@ -230,10 +196,9 @@ export default function Booking() {
           />
         );
       default:
-        return <div></div>
+        return <div></div>;
     }
   };
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -254,14 +219,23 @@ export default function Booking() {
         </Toolbar>
       </AppBar> */}
       <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
+        <div className="form-option p-0 m-1">
+          <label className="text-primary fs-5 fw-bolder mt-0 mb-2">
+            Thời gian
+          </label>
+          <input
+            className="form-control"
+            name="date"
+            type="date"
+            min={formatDate(new Date())}
+            defaultValue={formatDate(new Date())}
+            onChange={(e) => {setDate(e.target.value)}}
+          />
+        </div>
         <div class="card mb-3 mt-3">
           <div class="row g-0">
             <div class="col-md-4">
-              <img
-                src={car?.image}
-                class="img-fluid rounded-start"
-                alt="..."
-              />
+              <img src={car?.image} class="img-fluid rounded-start" alt="..." />
             </div>
             <div class="col-md-8">
               <div class="card-body h-100 position-relative">
@@ -272,14 +246,23 @@ export default function Booking() {
                   </span>
                 </div>
                 <p class="card-text text-muted">{car?.type}</p>
-                <p class="card-text hour">Bắt đầu: {car?.lines[0].departure_time} Bến xe {car?.lines[0].station}</p>
-                <p class="card-text hour">Kết thúc: {car?.lines[0].arrival_time} Bến xe {car?.lines[0].station_to}</p>
+                <p class="card-text hour">
+                  Bắt đầu: {car?.lines[0].departure_time} Bến xe{" "}
+                  {car?.lines[0].station}
+                </p>
+                <p class="card-text hour">
+                  Kết thúc: {car?.lines[0].arrival_time} Bến xe{" "}
+                  {car?.lines[0].station_to}
+                </p>
                 <p class="card-text place">Ngày đặt: {date}</p>
               </div>
             </div>
           </div>
         </div>
-        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+        <Paper
+          variant="outlined"
+          sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
+        >
           <Typography component="h1" variant="h4" align="center">
             Thông Tin Đặt Vé
           </Typography>
@@ -290,9 +273,7 @@ export default function Booking() {
               </Step>
             ))}
           </Stepper>
-          <React.Fragment>
-            {renderPage()}
-          </React.Fragment>
+          <React.Fragment>{renderPage()}</React.Fragment>
           {/* <React.Fragment>
             {activeStep === steps.length ? (
               <React.Fragment>
@@ -334,9 +315,21 @@ export default function Booking() {
 
 const moneyFormatter = (money) => {
   if (!money) money = 0;
-  const result = new Intl.NumberFormat('it-IT', {
-      style: 'currency',
-      currency: 'VND',
+  const result = new Intl.NumberFormat("it-IT", {
+    style: "currency",
+    currency: "VND",
   }).format(money);
   return result;
+};
+
+const formatDate = (date) => {
+  var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [year, month, day].join("-");
 };

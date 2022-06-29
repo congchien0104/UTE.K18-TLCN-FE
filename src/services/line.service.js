@@ -39,6 +39,12 @@ const getJourneyLineList = (id) => {
   });
 }
 
+const assignCar = (id, data) => {
+  return axios.put(API_URL + `lines/assign/${id}`, data, {
+    headers: authHeader(),
+  });
+};
+
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -48,4 +54,5 @@ export default {
   update,
   getCompayLineList,
   getJourneyLineList,
+  assignCar
 };

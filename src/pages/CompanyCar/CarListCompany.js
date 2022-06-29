@@ -24,8 +24,8 @@ function CarListCompany() {
     return (
       <div className="car-list">
       <div className="container">
-        <h1 className="heading-title">Nhà Xe {company?.name}</h1>
-        <Link className="text-success" to={`/company/cars/${company.id}`}>
+        <h1 className="heading-title text-primary">Nhà Xe {company?.name}</h1>
+        <Link className="btn btn-success" to={`/company/cars/${company.id}`}>
             Tạo Xe
         </Link>
         <div className="page-body">
@@ -33,19 +33,19 @@ function CarListCompany() {
             { (cars || []).map((car, index) => (
               <div key={index} className="col-lg-3 col-md-4 mb-5">
                 <div className="card">
-                  <div className="carlist-img">
-                    <img
-                      className="card-img-top"
-                      src={car.image}
-                      alt={car.name}
-                    />
-                  </div>
                   <div className="card-body">
-                    <div className="text-center">
-                      <h2 className="car-name">{car?.plate_number}</h2>
-                      <p1>Loại Xe: {car?.type}</p1><br/>
-                      <p1>Số Chỗ: {car?.capacity}</p1><br/>
-                      <p1>Tên Xe: {car?.name}</p1><br/>
+                    <figure style={{"minHeight":"10rem"}}>
+                      <img
+                        width="100%"
+                        src={car.image}
+                        alt={car.name}
+                      />
+                    </figure>
+                    <div>
+                      <h4 className="text-center text-primary">{car?.plate_number}</h4>
+                      <p>Loại Xe: {car?.type}</p>
+                      <p>Số Chỗ: {car?.capacity}</p>
+                      <p>Tên Xe: {car?.name}</p>
                     </div>
                   </div>
                   <div className="card-footer pb-4 border-top-0 bg-transparent">
@@ -53,8 +53,8 @@ function CarListCompany() {
                       <Link to={`/cars/${car.id}`} className="btn btn-success">
                         Cập Nhật
                       </Link>
-                      <Link to={`ticketbooking/${car.id}?date=2022-06-29`}>
-                        <button className="btn btn-primary fw-bolder">Đặt ngay</button>
+                      <Link to={`ticketbooking/${car.id}`}>
+                        <button className="btn btn-primary fw-bolder ms-3">Đặt ngay</button>
                       </Link>
                     </div>
                   </div>

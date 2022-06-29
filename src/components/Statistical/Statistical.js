@@ -28,7 +28,7 @@ function Statistical() {
   }, []);
   return (
     <div className="container mt-5">
-      <h2>Tổng doanh thu đạt được trên trang web: {total} VND</h2>
+      <h2>Tổng doanh thu đạt được trên trang web: { moneyFormatter(total)}</h2>
       <CChart
         type="bar"
         data={{
@@ -36,7 +36,7 @@ function Statistical() {
           datasets: [
             {
               label: 'Doanh Thu',
-              backgroundColor: '#f87979',
+              backgroundColor: 'green',
               data: data,
             },
           ],
@@ -46,5 +46,14 @@ function Statistical() {
     </div>
   );
 }
+
+const moneyFormatter = (money) => {
+  if (!money) money = 0;
+  const result = new Intl.NumberFormat('it-IT', {
+      style: 'currency',
+      currency: 'VND',
+  }).format(money);
+  return result;
+};
 
 export default Statistical;
