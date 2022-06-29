@@ -43,7 +43,7 @@ function CompanyList(props) {
               <tr key={index}>
                 <th scope="row">{index + 1}</th>
                 <td>{company.name}</td>
-                <td>{company.phone}</td>
+                <td>0{company.phone}</td>
                 <td>{company.address}</td>
                 <td>{company.createdAt}</td>
                 <td>

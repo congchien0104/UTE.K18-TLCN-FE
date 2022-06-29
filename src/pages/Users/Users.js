@@ -4,7 +4,7 @@ import UserList from "../../components/UserList/UserList";
 function Users(props) {
   return (
     <div>
-      <h2>User List</h2>
+      <h2>Danh sách người dùng</h2>
       <UserList />
     </div>
   );

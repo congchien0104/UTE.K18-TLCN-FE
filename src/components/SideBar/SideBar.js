@@ -23,18 +23,23 @@ function SideBar(props) {
   const initialMenus = [
     {
       id: 1,
-      name: "Home",
+      name: "Trang Chủ",
       to: "/",
     },
     {
       id: 2,
-      name: "Manage Users",
+      name: "Quản Lý Tài Khoản",
       to: "/users",
     },
     {
       id: 3,
-      name: "Manage Companies",
+      name: "Quản Lý Nhà Xe",
       to: "/companies",
+    },
+    {
+      id: 4,
+      name: "Liên Hệ",
+      to: "/contacts",
     },
   ];
   const [menus, setMenus] = useState(initialMenus);
@@ -42,8 +47,8 @@ function SideBar(props) {
   useEffect(() => {
     if (location.pathname.includes("/")) setState(1);
     if (location.pathname.includes("/users")) setState(2);
-    //if (location.pathname.includes("/cars")) setState(3);
-    if (location.pathname.includes("/companies")) setState(4);
+    if (location.pathname.includes("/companies")) setState(3);
+    if (location.pathname.includes("/contacts")) setState(4);
     //if (location.pathname.includes("/reservations")) setState(5);
     //if (location.pathname.includes("/feedbacks")) setState(6);
   }, [location]);

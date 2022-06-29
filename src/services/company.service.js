@@ -28,10 +28,8 @@ const getCompanyCarList = (id) => {
   });
 };
 
-const accept = (id, data) => {
-  console.log(id);
-  console.log(data);
-  return axios.put(API_URL + `companies/${id}`, data, {
+const accept = (id) => {
+  return axios.put(API_URL + `companies/${id}`, {
     headers: authHeader(),
   });
 }

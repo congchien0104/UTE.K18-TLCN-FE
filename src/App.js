@@ -35,6 +35,8 @@ import FeedbackList from "./pages/Feedbacks/FeedbackList";
 import CarListCompany from "./pages/CompanyCar/CarListCompany";
 import StatisticalCompany from "./components/Statistical/StatisticalCompany";
 import Booking from "./components/Booking/Booking";
+import CompanyConfirm from "./components/CompanyList/CompanyConfirm";
+import Contact from "./components/Contact/Contact";
 
 function App() {
   return (
@@ -96,6 +98,11 @@ function App() {
             />
             <Route
               exact
+              path="/companies/confirm"
+              component={() => <CompanyConfirm />}
+            />
+            <Route
+              exact
               path="/company/reservations/:id"
               component={() => <ReservationOfCar />}
             />
@@ -122,6 +129,7 @@ function App() {
             <Route exact path="/lines/journeys/edit/:id" component={() => <EditJourney />} />
             <Route exact path="/company/lines" component={() => <LineList />} />
             <Route exact path="/company/ticketbooking/:id" component={Booking} />
+            <Route exact path="/contacts" component={Contact} />
 
             <Route path="*" component={() => <div>404 Not Found!</div>} />
           </Switch>

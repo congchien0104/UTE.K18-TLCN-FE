@@ -4,7 +4,7 @@ import CompanyList from "../../components/CompanyList/CompanyList";
 function Companies(props) {
   return (
     <div>
-      <h2>Company List</h2>
+      <h2>Danh sách công ty</h2>
       <CompanyList />
     </div>
   );
